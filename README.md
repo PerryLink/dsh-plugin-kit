@@ -32,6 +32,17 @@ sustainable path for a single maintainer. This package is that kit.
 | `@perrylink/dsh-plugin-kit/verify` | Mechanical gates: `verify-license`, `verify-readme-languages`, `verify-seam`. |
 | `@perrylink/dsh-plugin-kit` | Root barrel re-exporting all of the above. |
 
+## Ecosystem tooling
+
+Beyond the library, this repository is the maintenance hub for the 33 plugin
+repos: `scripts/sync-peer-range.mjs` re-pins the shared `@deepseek-ai/dsh-*`
+peerDependencies band across all repos in one command, `renovate/default.json5`
+is the shared Renovate preset every repo extends,
+`.github/workflows/npm-publish.yml` is a reusable tag-triggered publish
+workflow (needs only an `NPM_TOKEN` secret), and `data/repos.json` is the
+ecosystem registry consumed by the portal. See
+[docs/ecosystem-tooling.md](docs/ecosystem-tooling.md).
+
 ### `seam` — Provider registry template
 
 A framework-agnostic, reversible registry for one capability's implementations.

@@ -1,0 +1,80 @@
+name: npm-publish
+
+# Reusable publish workflow for the @perrylink dsh plugin ecosystem.
+# Called from each plugin repo on tag push; no local npm token needed —
+# only an NPM_TOKEN repository/org secret is required.
+#
+# Caller example (in the plugin repo's .github/workflows/release.yml):
+#
+#   name: release
+#   on:
+#     push:
+#       tags: ['v*']
+#   jobs:
+#     publish:
+#       uses: PerryLink/dsh-plugin-kit/.github/workflows/npm-publish.yml@master
+#       with:
+#         package-dir: .
+#       secrets:
+#         npm_token: ${{ secrets.NPM_TOKEN }}
+
+on:
+  workflow_call:
+    inputs:
+      package-dir:
+        description: 'Directory containing the package.json to publish'
+        type: string
+        default: '.'
+        required: false
+      build-script:
+        description: 'npm/pnpm script that builds the package before publish'
+        type: string
+        default: 'build'
+        required: false
+      test-script:
+        description: 'npm/pnpm script that tests the package before publish'
+        type: string
+        default: 'test'
+        required: false
+      preid:
+        description: 'Prerelease id for npm publish --tag (empty = latest)'
+        type: string
+        default: ''
+        required: false
+    secrets:
+      npm_token:
+        description: 'npm registry automation token'
+        required: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'pnpm'
+      - name: Install
+        run: pnpm install --frozen-lockfile
+        working-directory: ${{ inputs.package-dir }}
+      - name: Test
+        run: pnpm run ${{ inputs.test-script }}
+        working-directory: ${{ inputs.package-dir }}
+      - name: Build
+        run: pnpm run ${{ inputs.build-script }}
+        working-directory: ${{ inputs.package-dir }}
+      - name: Publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
+        run: |
+          if [ -n "${{ inputs.preid }}" ]; then
+            npm publish --access public --tag "${{ inputs.preid }}" --provenance
+          else
+            npm publish --access public --provenance
+          fi
+        working-directory: ${{ inputs.package-dir }}
