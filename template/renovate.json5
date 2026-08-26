@@ -1,27 +1,9 @@
 {
-  // Renovate version-lock template for the 33 PerryLink DSH repos.
-  // All 33 lock `@deepseek-ai/dsh-*` peers to `>=0.1.0-rc.8 <0.2.0`; when the
-  // harness ships 0.2.0 every repo must bump together. This config groups the
-  // bumps into one PR per package so the upgrade stays atomic and reviewable.
+  // Version-lock template for new @perrylink dsh plugin repos. In-range
+  // dependency updates flow through the shared preset hosted in
+  // dsh-plugin-kit; breaking `@deepseek-ai/dsh-*` range re-pins are done with
+  // `node scripts/sync-peer-range.mjs --dir <reposDir> --write` from
+  // dsh-plugin-kit so every repo moves together.
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
-  extends: ["config:recommended"],
-
-  packageRules: [
-    {
-      // Harness core (Cordis + Schemastery) grouped into one PR.
-      matchPackageNames: ["@deepseek-ai/cordis", "@deepseek-ai/schemastery"],
-      groupName: "deepseek-harness-core",
-    },
-    {
-      // Every @deepseek-ai/dsh-* peer, grouped into one PR, kept inside the
-      // shared band. Re-open `allowedVersions` when dsh publishes 0.2.0.
-      matchPackagePatterns: ["^@deepseek-ai/dsh-"],
-      groupName: "deepseek-harness-peers",
-      allowedVersions: ">=0.1.0-rc.8 <0.2.0",
-    },
-  ],
-
-  // Peer range bumps need a human to re-run the gate; never auto-merge them.
-  automerge: false,
-  dependencyDashboard: true,
+  extends: ["github>PerryLink/dsh-plugin-kit//renovate/default.json5"],
 }

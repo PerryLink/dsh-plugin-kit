@@ -1,0 +1,5 @@
+{
+  "canonicalRange": ">=0.1.0-rc.8 <0.2.0",
+  "updatedAt": "2026-08-26",
+  "note": "Canonical peerDependencies range for @deepseek-ai/dsh-* across the 34-repo ecosystem. Run `node scripts/sync-peer-range.mjs --dir <reposDir> --write` after a dsh minor/major release to re-pin every repo, then let the shared Renovate preset open the update PRs."
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Shared Renovate preset for the @perrylink dsh plugin ecosystem (33 plugin repos extend this from dsh-plugin-kit).",
+  "extends": ["config:recommended"],
+  "rangeStrategy": "auto",
+  "schedule": ["on the first day of the month"],
+  "dependencyDashboard": true,
+  "prHourlyLimit": 4,
+  "packageRules": [
+    {
+      "matchPackagePrefixes": ["@deepseek-ai/dsh-"],
+      "groupName": "dsh-core peer range",
+      "description": "Routine in-range bumps are grouped. Breaking range re-pins (<0.2.0 -> >=0.2.0 <0.3.0) are NOT done here: run `node scripts/sync-peer-range.mjs --dir <reposDir> --write` from dsh-plugin-kit after a dsh minor/major release, then Renovate rebases this group."
+    },
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": false,
+      "description": "Updates stay manual PRs; the maintainer merges after local checks."
+    }
+  ]
+}
