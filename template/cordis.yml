@@ -1,0 +1,14 @@
+# <PLUGIN_NAME> bundle patch: mount the <PLUGIN_NAME> plugin.
+#
+# Every key under `config` is a Config field (see src/index.ts); invalid values
+# fail the profile load loudly. Ship this file as `cordis.patch.yml` in the
+# package root and reference it from package.json `dsh.bundle.patch`.
+- insert:
+    - id: <plugin-id>
+      name: <PLUGIN_NAME>
+      config:
+        # Which provider the ProviderRegistry resolves. `default` is the
+        # built-in zero-dependency implementation; `fast` is registered by the
+        # plugin itself. Optional heavy backends are separate peer packages that
+        # register their own names.
+        provider: default

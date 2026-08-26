@@ -1,0 +1,4 @@
+# Nearest-workspace root: isolates this repo from any surrounding
+# deepseek-harness workspace so `pnpm install` resolves only this package.
+packages:
+  - "."
