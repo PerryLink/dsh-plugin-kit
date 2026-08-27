@@ -1,5 +1,8 @@
 # @perrylink/dsh-plugin-kit
 
+[![npm version](https://img.shields.io/npm/v/@perrylink/dsh-plugin-kit)](https://www.npmjs.com/package/@perrylink/dsh-plugin-kit)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+
 Shared **zero-runtime-dependency** toolkit for the 33 PerryLink DSH plugin
 repositories. It extracts the cross-cutting infrastructure every plugin
 reimplements today — the pluggable Provider seam, the fail-closed and adaptive
