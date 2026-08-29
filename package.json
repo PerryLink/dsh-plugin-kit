@@ -85,5 +85,9 @@
     "@types/node": "^22.19.0",
     "typescript": "^6.0.3",
     "vitest": "^4.1.10"
+  },
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/PerryLink"
   }
 }
