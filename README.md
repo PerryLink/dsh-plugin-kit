@@ -1,57 +1,58 @@
-# @perrylink/dsh-plugin-kit
+﻿# @perrylink/dsh-plugin-kit
+- **1024 store channel**: `npm i -g dsh1024` once, then `dsh1024 plugin --profile web add @perrylink/dsh-plugin-kit` (counts toward the [deepseek1024.com](https://deepseek1024.com) install ranking).
 
 [![npm version](https://img.shields.io/npm/v/@perrylink/dsh-plugin-kit)](https://www.npmjs.com/package/@perrylink/dsh-plugin-kit)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 
-Shared **zero-runtime-dependency** toolkit for the 33 PerryLink DSH plugin
-repositories. It extracts the cross-cutting infrastructure every plugin
-reimplements today — the pluggable Provider seam, the fail-closed and adaptive
-session-event gates, the mechanical verify scripts, and the shared
-sanitize/pricing/judge pure modules — into one ESM + TypeScript package.
+Shared **zero-runtime-dependency** toolkit for the PerryLink DSH plugin
+repositories. The per-project audit found 20+ of the 33 plugins hand-rolling
+the same Provider seam and duplicating the same sanitize/pricing/verdict
+shapes, so this package extracts all of it — the pluggable Provider seam, the
+fail-closed approval and adaptive session-event gates, the mechanical verify
+scripts, and the shared sanitize/pricing/judge pure modules — into one
+ESM + TypeScript package.
 
-- **Zero runtime dependencies** — nothing in `dependencies`; the pure core
-  (`seam`, `gates`, `shared`) is browser-safe.
-- **ESM + strict TypeScript** — every module ships JSDoc contracts; `strict`,
+## Compatibility
+
+- **DSH harness**: the kit imports nothing from `@deepseek-ai/*` at runtime.
+  `@deepseek-ai/cordis` (`^4.0.1`), `@deepseek-ai/schemastery` (`^3.18.0`),
+  and the `@deepseek-ai/dsh-*` packages are **optional** peer dependencies in
+  the `>=0.1.0-rc.8 <0.2.0` band the 33 repos share; they exist only for type
+  interop.
+- **Node**: `^22.19.0 || >=24.0.0`, ESM only.
+- **Wire compatibility**: names and shapes mirror `dsh-mask` (sanitize),
+  `dsh-budget` (pricing), and `dsh-auto-review` (judge and the
+  `fallbackPolicy` vocabulary), so migration is mechanical.
+
+## What you get
+
+- **Zero runtime dependencies** — the pure core (`seam`, `gates`, `shared`)
+  is browser-safe.
+- **ESM + strict TypeScript** — JSDoc contracts on every module; `strict`,
   `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`.
-- **Wire-compatible with the 33 repos** — function names and shapes mirror
-  `dsh-mask` (sanitize), `dsh-budget` (pricing), and `dsh-auto-review` (judge)
-  so migration is mechanical.
+- **Fail-closed and adaptive gates** — approval never defaults to a grant;
+  session-event appends degrade gracefully on hosts that reject unknown event
+  types.
+- **A new-plugin skeleton** — `template/` with `cordis.yml`, a three-role
+  `src/index.ts` (Service Definition / Provider / Consumer), a test, and the
+  shared Renovate preset.
 
-## Why this package exists
+## Quick start
 
-The per-project audit (`perrylink-dsh-33-逐项目优化方案.md`) found that 20+ of
-the 33 plugins independently hand-roll the same Provider-seam registry, and
-several duplicate the same PII/sanitize, pricing, and approval-verdict shapes.
-Eight independent sub-agents concluded the same thing: a shared kit is the only
-sustainable path for a single maintainer. This package is that kit.
+From npm:
 
-## Modules
+```sh
+pnpm add @perrylink/dsh-plugin-kit
+```
 
-| Subpath | Purpose |
-|---|---|
-| `@perrylink/dsh-plugin-kit/seam` | Pluggable `ProviderRegistry<T>` seam template. |
-| `@perrylink/dsh-plugin-kit/gates` | Fail-closed approval + adaptive (ignorable) session-event gates. |
-| `@perrylink/dsh-plugin-kit/shared` | `sanitize` / `pricing` / `judge` pure modules. |
-| `@perrylink/dsh-plugin-kit/verify` | Mechanical gates: `verify-license`, `verify-readme-languages`, `verify-seam`. |
-| `@perrylink/dsh-plugin-kit` | Root barrel re-exporting all of the above. |
+From git (the `prepare` script builds `lib/` using only production
+dependencies):
 
-## Ecosystem tooling
+```sh
+pnpm add github:PerryLink/dsh-plugin-kit
+```
 
-Beyond the library, this repository is the maintenance hub for the 33 plugin
-repos: `scripts/sync-peer-range.mjs` re-pins the shared `@deepseek-ai/dsh-*`
-peerDependencies band across all repos in one command, `renovate/default.json5`
-is the shared Renovate preset every repo extends,
-`.github/workflows/npm-publish.yml` is a reusable tag-triggered publish
-workflow (needs only an `NPM_TOKEN` secret), and `data/repos.json` is the
-ecosystem registry consumed by the portal. See
-[docs/ecosystem-tooling.md](docs/ecosystem-tooling.md).
-
-### `seam` — Provider registry template
-
-A framework-agnostic, reversible registry for one capability's implementations.
-`register()` returns a disposer, so a Cordis plugin registers inside
-`ctx.effect()` and teardown is automatic. Duplicate names fail loud. A default
-implementation can be injected up front.
+Replace a hand-rolled registry in one step:
 
 ```ts
 import { ProviderRegistry } from '@perrylink/dsh-plugin-kit/seam'
@@ -63,71 +64,90 @@ ctx.effect(() => registry.register('ner', new NerDetector()))
 const active = registry.use('ner') ?? registry.use()
 ```
 
-### `gates` — approval and session-event gates
+## Install & uninstall
 
-- `applyFailClosed` — resolves a reviewer/rule verdict to a decision, defaulting
-  to `deny` on failure (fail closed, matching `dsh-auto-review`'s
-  `fallbackPolicy`).
-- `makeEventGate` / `maybeAppendSessionEvent` / `probeIgnorableAppend` — the
-  adaptive `ignorable`-envelope gate `dsh-mask` and `dsh-auto-review` both
-  reimplement, so audit events never break session resume on hosts that do not
-  stamp the envelope.
-
-### `shared` — sanitize / pricing / judge
-
-- `sanitize` — `Stripper` (placeholder `<LABEL_N>` masking + restore table),
-  `redactText`/`redactMapping`, and display `sanitizeText`/`sanitizeUrl`.
-- `pricing` — `BUILTIN_PRICES` (USD/1M), `estimateUsageCost`, `tokenCarbon`,
-  `latencyStats`, `formatMoney`, `formatTokens`.
-- `judge` — `{ decision, reason, riskLevel }` validation (`parseVerdict`,
-  `VERDICT_SCHEMA`, `riskExceeds`).
-
-### `verify` — mechanical CI gates
-
-Each returns a `VerifyReport` and the CLI sets a non-zero exit code on failure:
+Install is `pnpm add` (see Quick start). Remove with:
 
 ```sh
-node lib/verify/cli.js all .
+pnpm remove @perrylink/dsh-plugin-kit
 ```
 
-### `template/` — new-plugin skeleton
+Nothing registers global state: uninstall is exactly the reverse of install.
 
-`cordis.yml`, `src/index.ts` (Service Definition / Service Provider / Consumer
-roles), a minimal test, a README, and `renovate.json5` (the shared version-lock
-upgrade template for the `<0.2.0` band).
+## Configuration
 
-## Integrating into the existing 33 repos
+No runtime configuration: the gates and helpers are pure functions. The only
+configuration surface is `cordis.patch.yml`, the bundle-patch layer shipped
+for harness profile composition; it mounts no plugin row (the kit is a
+library) and documents how consuming plugins add their own rows.
 
-1. Add the kit as a regular dependency (it has none of its own):
-   ```sh
-   pnpm add @perrylink/dsh-plugin-kit
-   ```
-2. Replace a hand-rolled registry with `ProviderRegistry` (`seam`), or import
-   the shared modules directly (`shared`, `gates`) — the shapes match the
-   current code, so the change is mostly deleting duplicated files.
-3. Add the mechanical gates to CI (drop-in for the existing `verify-*.mjs`
-   scripts):
-   ```sh
-   node node_modules/@perrylink/dsh-plugin-kit/lib/verify/cli.js all .
-   ```
-4. Copy `template/renovate.json5` to keep the `@deepseek-ai/dsh-*` peers
-   grouped and inside the `>=0.1.0-rc.8 <0.2.0` band.
+## Tools & surfaces
 
-## Peer dependencies
+| Subpath | Purpose |
+|---|---|
+| `seam` | `ProviderRegistry<T>` — reversible, fail-loud named provider registry. |
+| `gates` | `applyFailClosed`; `makeEventGate` / `maybeAppendSessionEvent` / `probeIgnorableAppend`. |
+| `shared` | `sanitize` (`Stripper`, `redactText`, `redactMapping`, `sanitizeText`, `sanitizeUrl`), `pricing` (`BUILTIN_PRICES`, `estimateUsageCost`, `tokenCarbon`, `latencyStats`, `formatMoney`, `formatTokens`), `judge` (`parseVerdict`, `VERDICT_SCHEMA`, `riskExceeds`). |
+| `verify` | Mechanical CI gates (`verify-license`, `verify-readme-languages`, `verify-seam`) with a `VerifyReport` and a non-zero-exit CLI: `node lib/verify/cli.js all .` |
+| `template/` | New-plugin skeleton (`cordis.yml`, three-role plugin, test, README, `renovate.json5`). |
+| root barrel | Re-exports all of the above. |
 
-`@deepseek-ai/cordis` and the `@deepseek-ai/dsh-*` packages are declared as
-**optional** peer dependencies in the same `>=0.1.0-rc.8 <0.2.0` range the 33
-repos use. They are optional because the kit does not import them at runtime:
-they exist only for type interop when a consumer already has the harness
-installed.
+## Permissions & data
+
+The kit performs no I/O, no network access, and no subprocess spawns on its
+own. `Stripper` keeps placeholder→original mappings in memory only, and
+`stats()`/`redactMapping()` never emit plaintext; a consumer that persists a
+mapping owns that decision and its storage permissions.
+
+## Security boundaries
+
+- `sanitize`/`redact*` are **display hygiene**, not a security boundary: they
+  reduce leakage into logs and results, they do not authenticate or authorize.
+- Approval gates are fail closed by default (`rejected`); the only grant path
+  is an explicit `allow-once` opt-in.
+- Session-event appends the host refuses are skipped, never retried in a way
+  that could break session resume.
+- Report vulnerabilities via GitHub Security Advisories — see `SECURITY.md`.
+
+## Known limitations
+
+- Hosts whose `Session.append` third argument is a `SurfaceIntent`
+  (`0.1.2-alpha.1`) throw `validateNext` on the ignorable-envelope probe; the
+  gate degrades to skip-unknown, so audit events are dropped (fail closed)
+  rather than logged on those hosts.
+- The kit ships no browser UI half; it is a library consumed by the Host (and
+  optionally Client) halves of other plugins.
 
 ## Development
 
 ```sh
 pnpm install
-pnpm test        # vitest unit tests
-pnpm typecheck   # tsc --noEmit
-pnpm build       # emit lib/ + declarations
+pnpm run typecheck        # tsc --noEmit
+pnpm run typecheck:ci     # CI face: tsc -p tsconfig.ci.json --noEmit
+pnpm test                 # vitest unit tests
+pnpm run build            # emit lib/ + declarations (also run by prepare)
+pnpm run verify:self-contained
+pnpm run verify:artifacts
 ```
 
-License: Apache-2.0.
+## Topics
+
+This repository is also the maintenance hub for the 33 plugin repos:
+`scripts/sync-peer-range.mjs` re-pins the shared peer band across all repos in
+one command, `renovate/default.json5` is the shared Renovate preset every repo
+extends, `.github/workflows/npm-publish.yml` is a reusable tag-triggered
+publish workflow (needs only an `NPM_TOKEN` secret), and `data/repos.json` is
+the ecosystem registry consumed by the portal. See
+[docs/ecosystem-tooling.md](docs/ecosystem-tooling.md).
+
+Keywords: dsh, dsh-plugin, deepseek-harness, deepseek, cordis, perrylink,
+provider, seam, approval, sanitize, pricing, judge.
+
+## Contributors
+
+Maintained by [PerryLink](https://github.com/PerryLink) with contributions
+from the DSH plugin ecosystem.
+
+## License
+
+Apache-2.0 — see [LICENSE](LICENSE).
