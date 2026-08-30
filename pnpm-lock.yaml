@@ -20,13 +20,16 @@ importers:
       '@deepseek-ai/dsh-user-approval':
         specifier: '>=0.1.0-rc.8 <0.2.0'
         version: 0.1.0-rc.8(380a43f4d6510c4a5dfadf54dc7f17a7)
+      '@deepseek-ai/schemastery':
+        specifier: ^3.18.0
+        version: 3.18.1
+      typescript:
+        specifier: ^6.0.3
+        version: 6.0.3
     devDependencies:
       '@types/node':
         specifier: ^22.19.0
         version: 22.20.1
-      typescript:
-        specifier: ^6.0.3
-        version: 6.0.3
       vitest:
         specifier: ^4.1.10
         version: 4.1.11(@types/node@22.20.1)(vite@8.2.2(@types/node@22.20.1))
