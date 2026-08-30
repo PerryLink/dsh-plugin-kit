@@ -32,19 +32,35 @@ export interface JudgeVerdict {
   readonly riskLevel?: RiskLevel
 }
 
+/** JSON-schema node types in the host's enforced subset (host mirror). */
+export type JsonSchemaType = 'object' | 'array' | 'string' | 'number' | 'integer' | 'boolean' | 'null'
+
+/** Scalar-only schema types accepted by literal constraints (host mirror). */
+export type JsonSchemaScalarType = Exclude<JsonSchemaType, 'object' | 'array'>
+
 /**
- * The minimal object-rooted JSON-schema shape the dsh-tools structured-output
- * seam enforces. Structural (no zod dependency) so it stays usable in both
- * Host and Client halves; it is assignable to `dsh-tools`' `ObjectJsonSchema`.
+ * The minimal object-rooted JSON-schema surface the dsh-tools
+ * structured-output seam enforces. Mirrors the host's `JsonSchemaNode`
+ * (`packages/core/tools/src/json-schema.ts`): every node field is optional
+ * there, so this structural type keeps `type`/`properties`/`required`/`enum`
+ * optional and uses the host's mutable field types. `VERDICT_SCHEMA` is
+ * therefore assignable to the host's `ObjectJsonSchema`
+ * (`JsonSchemaNode & { type: 'object' }`) exactly as declared.
  */
 export interface ObjectJsonSchema {
-  readonly type: 'object'
-  readonly properties: Readonly<Record<string, { readonly type: string; readonly enum?: readonly string[] }>>
-  readonly required: readonly string[]
+  type?: JsonSchemaType
+  properties?: Record<string, ObjectJsonSchema>
+  required?: string[]
+  enum?: JsonSchemaScalarType[]
 }
 
-/** Object-rooted verdict schema for the structured_output capture. */
-export const VERDICT_SCHEMA: ObjectJsonSchema = Object.freeze({
+/**
+ * Object-rooted verdict schema for the structured_output capture. The
+ * intersection re-requires `type`/`properties`/`required` (present on this
+ * literal) while keeping the assignability to the host's `ObjectJsonSchema`
+ * (`JsonSchemaNode & { type: 'object' }`, all fields optional).
+ */
+export const VERDICT_SCHEMA: ObjectJsonSchema & { type: 'object'; properties: Record<string, ObjectJsonSchema>; required: string[] } = Object.freeze({
   type: 'object',
   properties: {
     decision: { type: 'string', enum: ['allow', 'deny'] },
@@ -52,7 +68,7 @@ export const VERDICT_SCHEMA: ObjectJsonSchema = Object.freeze({
     riskLevel: { type: 'string', enum: ['low', 'medium', 'high'] },
   },
   required: ['decision', 'reason'],
-})
+}) as ObjectJsonSchema & { type: 'object'; properties: Record<string, ObjectJsonSchema>; required: string[] }
 
 /**
  * Truncate a string to a cap, appending an ellipsis when cut.

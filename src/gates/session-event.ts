@@ -26,7 +26,10 @@ export type EventGate = (type: string) => EventGateDecision
 /**
  * Build the adaptive event gate.
  *
- * @param knownTypes - event types the host's `SessionEventMap` knows.
+ * @param knownTypes - the host's known session-event vocabulary: event types
+ *   the running host's `SessionEventMap` declares (its required-on-read
+ *   `KNOWN_SESSION_EVENT_TYPES`). Hosts refuse appends whose type is not in
+ *   this vocabulary unless the append carries the `ignorable` envelope.
  * @param ignorableAppend - whether the host's `Session.append` stamps the
  *   `ignorable` envelope (probe with {@link probeIgnorableAppend}).
  * @returns the decision function described above.
@@ -45,10 +48,14 @@ export interface AppendableSession {
    * Append one session event.
    * @param type - event type.
    * @param data - event payload.
-   * @param envelope - optional options bag (`{ ignorable: boolean }`).
+   * @param third - host-dependent third argument: the options bag
+   *   (`{ ignorable: boolean }`) accepted by every released rc line through
+   *   `0.1.1-rc.2`, and a `SurfaceIntent` since `0.1.2-alpha.1` (which
+   *   rejects the options bag in `validateNext`). Declared `unknown` so
+   *   sessions from both host generations satisfy this surface.
    * @returns the appended event (shape host-dependent).
    */
-  append(type: string, data: unknown, envelope?: { readonly ignorable?: boolean }): unknown
+  append(type: string, data: unknown, third?: unknown): unknown
 }
 
 /**
@@ -86,6 +93,11 @@ export function maybeAppendSessionEvent(
  * event's `ignorable` field. Hosts whose `append` drops the options bag
  * (every released rc line through `0.1.1-rc.2`) return `false`.
  *
+ * Hosts whose third append argument is a `SurfaceIntent` (`0.1.2-alpha.1`
+ * onward) throw `validateNext` on the probe options bag; the throw is
+ * swallowed and the probe reports `false`, because a host without the options
+ * bag has no ignorable envelope to stamp.
+ *
  * @param session - the live session to probe.
  * @param probeType - an event type already known to the host (so the probe
  *   append is itself valid even when the envelope is not stamped).
@@ -93,6 +105,11 @@ export function maybeAppendSessionEvent(
  * @returns `true` when the host stamps the envelope.
  */
 export function probeIgnorableAppend(session: AppendableSession, probeType: string, probeData: unknown = {}): boolean {
-  const event = session.append(probeType, probeData, { ignorable: true }) as { ignorable?: boolean } | undefined
-  return event?.ignorable === true
+  try {
+    // SurfaceIntent-era hosts throw `validateNext` on the options bag.
+    return (session.append(probeType, probeData, { ignorable: true }) as { ignorable?: boolean } | undefined)?.ignorable === true
+  } catch {
+    // Only `validateNext` from a SurfaceIntent-era host can reach here.
+    return false
+  }
 }
