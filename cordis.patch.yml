@@ -1,9 +1,9 @@
-﻿# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: Apache-2.0
 # @perrylink/dsh-plugin-kit bundle patch layer.
 #
 # The kit is a library, not a plugin: it mounts no plugin row of its own, so
-# this layer is intentionally comment-only. It exists so the package can flow
-# through the harness bundle channel
+# this layer is an intentionally empty array. It exists so the package can
+# flow through the harness bundle channel
 # (`dsh1024 plugin --profile web add @perrylink/dsh-plugin-kit`) and it is the
 # canonical place where consuming plugins add their own `insert:` rows.
 #
@@ -13,3 +13,4 @@
 #     name: my-plugin
 #     config: {}
 #     # disable: false
+[]
