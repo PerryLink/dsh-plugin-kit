@@ -1,0 +1,17 @@
+name: release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    uses: PerryLink/dsh-plugin-kit/.github/workflows/npm-publish.yml@master
+    with:
+      package-dir: .
+    secrets:
+      npm_token: ${{ secrets.NPM_TOKEN }}
