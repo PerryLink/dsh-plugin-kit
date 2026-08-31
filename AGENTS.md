@@ -1,4 +1,4 @@
-﻿# AGENTS.md
+# AGENTS.md
 
 Repo-local decisions for `@perrylink/dsh-plugin-kit` (v0.1.x, unpublished).
 The engineering standard lives in the batch task spec and the DeepSeek
@@ -14,7 +14,11 @@ Harness `AGENTS.md`; this file records only what is decided *here*.
 - **Session events**: `src/gates/session-event.ts` is the shared adaptive
   (`ignorable`) append gate. `probeIgnorableAppend` must swallow append
   errors: hosts whose third append argument is a `SurfaceIntent`
-  (`0.1.2-alpha.1`) throw `validateNext` on the probe options bag.
+  (`0.1.2-alpha.1` onward) throw `validateNext` on the probe options bag
+  for surface probe types and ignore it for log-only types — either way
+  the probe reports `false`. `0.1.2-alpha.2` retains the `ignorable?: true`
+  envelope field for stored-log read compatibility only; `Session.append`
+  still cannot stamp it.
 - **Judge schema**: `src/shared/judge.ts` `ObjectJsonSchema` mirrors the host
   `JsonSchemaNode` (`packages/core/tools/src/json-schema.ts`): every node
   field is optional and array/record fields stay mutable so `VERDICT_SCHEMA`

@@ -50,9 +50,13 @@ export interface AppendableSession {
    * @param data - event payload.
    * @param third - host-dependent third argument: the options bag
    *   (`{ ignorable: boolean }`) accepted by every released rc line through
-   *   `0.1.1-rc.2`, and a `SurfaceIntent` since `0.1.2-alpha.1` (which
-   *   rejects the options bag in `validateNext`). Declared `unknown` so
-   *   sessions from both host generations satisfy this surface.
+   *   `0.1.1-rc.2`, and a `SurfaceIntent` (`{ surfaceOp, sourceEventSeqs? }`,
+   *   surface event types only) since `0.1.2-alpha.1` — still true in
+   *   `0.1.2-alpha.2`, which has no `ignorable` option; its retained
+   *   `ignorable?: true` envelope field exists for stored-log read
+   *   compatibility only (host note
+   *   2026-08-30-retain-ignorable-external-session-events). Declared
+   *   `unknown` so sessions from all host generations satisfy this surface.
    * @returns the appended event (shape host-dependent).
    */
   append(type: string, data: unknown, third?: unknown): unknown
@@ -94,9 +98,11 @@ export function maybeAppendSessionEvent(
  * (every released rc line through `0.1.1-rc.2`) return `false`.
  *
  * Hosts whose third append argument is a `SurfaceIntent` (`0.1.2-alpha.1`
- * onward) throw `validateNext` on the probe options bag; the throw is
- * swallowed and the probe reports `false`, because a host without the options
- * bag has no ignorable envelope to stamp.
+ * onward, including `0.1.2-alpha.2`) never stamp the envelope either: the
+ * probe options bag is ignored for log-only probe types and trips surface
+ * validation for surface probe types. The read-back reports `false` on
+ * both paths, because a host without an ignorable append option cannot
+ * stamp the envelope.
  *
  * @param session - the live session to probe.
  * @param probeType - an event type already known to the host (so the probe
@@ -106,10 +112,12 @@ export function maybeAppendSessionEvent(
  */
 export function probeIgnorableAppend(session: AppendableSession, probeType: string, probeData: unknown = {}): boolean {
   try {
-    // SurfaceIntent-era hosts throw `validateNext` on the options bag.
+    // SurfaceIntent-era hosts (0.1.2-alpha.1 onward) either ignore the
+    // probe options bag (log-only types) or throw validateNext (surface
+    // types); the read-back below reports false on every path.
     return (session.append(probeType, probeData, { ignorable: true }) as { ignorable?: boolean } | undefined)?.ignorable === true
   } catch {
-    // Only `validateNext` from a SurfaceIntent-era host can reach here.
+    // validateNext from a SurfaceIntent-era host with a surface probe type.
     return false
   }
 }
