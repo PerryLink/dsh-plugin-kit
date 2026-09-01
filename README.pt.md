@@ -16,8 +16,8 @@ ESM + TypeScript.
 ## Compatibilidade
 
 - **DSH harness**: o kit não importa nada de `@deepseek-ai/*` em tempo de
-  execução. `@deepseek-ai/cordis` (`^4.0.1`), `@deepseek-ai/schemastery`
-  (`^3.18.0`) e os pacotes `@deepseek-ai/dsh-*` são peer dependencies
+  execução. `@deepseek-ai/cordis` (`^4.0.2`), `@deepseek-ai/schemastery`
+  (`^3.18.2`) e os pacotes `@deepseek-ai/dsh-*` são peer dependencies
   **opcionais** na faixa `>=0.1.0-rc.8 <0.2.0` compartilhada pelos 33 repos;
   existem apenas para interoperação de tipos.
 - **Node**: `^22.19.0 || >=24.0.0`, somente ESM.
@@ -115,10 +115,10 @@ persista um mapeamento é dono dessa decisão e das permissões de armazenamento
 ## Limitações conhecidas
 
 - Hosts cujo terceiro argumento de `Session.append` é um `SurfaceIntent`
-  (`0.1.2-alpha.2`) lançam `validateNext` na sonda do envelope ignorable; a
+  (`0.1.2-alpha.3`) lançam `validateNext` na sonda do envelope ignorable; a
   porta degrada para pular-desconhecido, então eventos de auditoria são
   descartados (fail closed) nesses hosts em vez de registrados.
-- 0.1.2-alpha.2 (adaptado em 2026-08-31): o envelope de sessão mantém seu campo ignorable apenas para compatibilidade de leitura de logs armazenados - o Session.append ainda não consegue estampá-lo, então o comportamento da porta não muda.
+- 0.1.2-alpha.3 (adaptado em 2026-09-01): o envelope de sessão mantém seu campo ignorable apenas para compatibilidade de leitura de logs armazenados - o Session.append ainda não consegue estampá-lo, então o comportamento da porta não muda.
 - O kit não traz metade de UI de navegador: é uma biblioteca consumida pelas
   metades Host (e opcionalmente Client) de outros plugins.
 

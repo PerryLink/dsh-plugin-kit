@@ -12,5 +12,5 @@
 #   - id: my-plugin
 #     name: my-plugin
 #     config: {}
-#     # disable: false
+#     # disabled: false
 []

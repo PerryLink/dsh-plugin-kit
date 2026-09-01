@@ -15,7 +15,7 @@ ESM + TypeScript package.
 ## Compatibility
 
 - **DSH harness**: the kit imports nothing from `@deepseek-ai/*` at runtime.
-  `@deepseek-ai/cordis` (`^4.0.1`), `@deepseek-ai/schemastery` (`^3.18.0`),
+  `@deepseek-ai/cordis` (`^4.0.2`), `@deepseek-ai/schemastery` (`^3.18.2`),
   and the `@deepseek-ai/dsh-*` packages are **optional** peer dependencies in
   the `>=0.1.0-rc.8 <0.2.0` band the 33 repos share; they exist only for type
   interop.
@@ -112,10 +112,10 @@ mapping owns that decision and its storage permissions.
 ## Known limitations
 
 - Hosts whose `Session.append` third argument is a `SurfaceIntent`
-  (`0.1.2-alpha.2`) throw `validateNext` on the ignorable-envelope probe; the
+  (`0.1.2-alpha.3`) throw `validateNext` on the ignorable-envelope probe; the
   gate degrades to skip-unknown, so audit events are dropped (fail closed)
   rather than logged on those hosts.
-- 0.1.2-alpha.2 (adapted 2026-08-31): the session envelope keeps its ignorable field for stored-log read compatibility only - Session.append still cannot stamp it, so audit-gate behavior is unchanged.
+- 0.1.2-alpha.3 (adapted 2026-09-01): the session envelope keeps its ignorable field for stored-log read compatibility only - Session.append still cannot stamp it, so audit-gate behavior is unchanged.
 - The kit ships no browser UI half; it is a library consumed by the Host (and
   optionally Client) halves of other plugins.
 

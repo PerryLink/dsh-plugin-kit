@@ -16,8 +16,8 @@ ESM + TypeScript.
 ## Compatibilidad
 
 - **DSH harness**: el kit no importa nada de `@deepseek-ai/*` en tiempo de
-  ejecución. `@deepseek-ai/cordis` (`^4.0.1`), `@deepseek-ai/schemastery`
-  (`^3.18.0`) y los paquetes `@deepseek-ai/dsh-*` son peer dependencies
+  ejecución. `@deepseek-ai/cordis` (`^4.0.2`), `@deepseek-ai/schemastery`
+  (`^3.18.2`) y los paquetes `@deepseek-ai/dsh-*` son peer dependencies
   **opcionales** en la banda `>=0.1.0-rc.8 <0.2.0` compartida por los 33
   repos; solo existen para interoperar tipos.
 - **Node**: `^22.19.0 || >=24.0.0`, solo ESM.
@@ -114,10 +114,10 @@ persista un mapeo es dueño de esa decisión y de sus permisos de almacenamiento
 ## Limitaciones conocidas
 
 - Los hosts cuyo tercer argumento de `Session.append` es un `SurfaceIntent`
-  (`0.1.2-alpha.2`) lanzan `validateNext` ante la sonda del sobre ignorable;
+  (`0.1.2-alpha.3`) lanzan `validateNext` ante la sonda del sobre ignorable;
   la puerta degrada a omitir-desconocido, de modo que los eventos de auditoría
   se descartan (fail closed) en esos hosts en lugar de registrarse.
-- 0.1.2-alpha.2 (adaptado el 2026-08-31): el sobre de sesión conserva su campo ignorable solo para compatibilidad de lectura de logs almacenados - Session.append aún no puede estamparlo, por lo que el comportamiento de la puerta no cambia.
+- 0.1.2-alpha.3 (adaptado el 2026-09-01): el sobre de sesión conserva su campo ignorable solo para compatibilidad de lectura de logs almacenados - Session.append aún no puede estamparlo, por lo que el comportamiento de la puerta no cambia.
 - El kit no trae mitad de UI de navegador: es una biblioteca consumida por las
   mitades Host (y opcionalmente Client) de otros plugins.
 

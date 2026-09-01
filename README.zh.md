@@ -12,7 +12,7 @@
 ## 兼容性
 
 - **DSH harness**：本包运行时零 `@deepseek-ai/*` import。`@deepseek-ai/cordis`
-  （`^4.0.1`）、`@deepseek-ai/schemastery`（`^3.18.0`）与各 `@deepseek-ai/dsh-*`
+  （`^4.0.2`）、`@deepseek-ai/schemastery`（`^3.18.2`）与各 `@deepseek-ai/dsh-*`
   包均声明为**可选** peer 依赖，区间与 33 仓一致（`>=0.1.0-rc.8 <0.2.0`），仅用于
   类型互通。
 - **Node**：`^22.19.0 || >=24.0.0`，仅 ESM。
@@ -97,10 +97,10 @@ bundle-patch 层，供 harness profile 组合使用；它不挂载插件行（�
 
 ## 已知限制
 
-- `Session.append` 第三参为 `SurfaceIntent` 的宿主（`0.1.2-alpha.2`）会对 ignorable
+- `Session.append` 第三参为 `SurfaceIntent` 的宿主（`0.1.2-alpha.3`）会对 ignorable
   信封探测抛 `validateNext`；门退化为跳过未知类型，即该类宿主上审计事件被丢弃
   （fail closed）而非写入。
-- 0.1.2-alpha.2（2026-08-31 已适配）：会话信封保留 ignorable 字段但仅用于存量日志读取兼容——Session.append 仍无法盖章，门控行为不变。
+- 0.1.2-alpha.3（2026-09-01 已适配）：会话信封保留 ignorable 字段但仅用于存量日志读取兼容——Session.append 仍无法盖章，门控行为不变。
 - 本包无浏览器 UI 半：它是被其他插件 Host（及可选 Client）半消费的库。
 
 ## 开发
