@@ -2,3 +2,4 @@
 # deepseek-harness workspace so `pnpm install` resolves only this package.
 packages:
   - "."
+verifyDepsBeforeRun: false
