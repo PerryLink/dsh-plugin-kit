@@ -1,4 +1,4 @@
-﻿# @perrylink/dsh-plugin-kit
+# @perrylink/dsh-plugin-kit
 - **1024 store channel**: `npm i -g dsh1024` once, then `dsh1024 plugin --profile web add @perrylink/dsh-plugin-kit` (counts toward the [deepseek1024.com](https://deepseek1024.com) install ranking).
 
 [![npm version](https://img.shields.io/npm/v/@perrylink/dsh-plugin-kit)](https://www.npmjs.com/package/@perrylink/dsh-plugin-kit)
@@ -112,7 +112,8 @@ mapping owns that decision and its storage permissions.
 ## Known limitations
 
 - Hosts whose `Session.append` third argument is a `SurfaceIntent`
-  (`0.1.2-alpha.1`) throw `validateNext` on the ignorable-envelope probe; the
+  (`0.1.2-alpha.2`) throw `validateNext` on the ignorable-envelope probe; the
+0.1.2-alpha.2 (adapted 2026-08-31): the session envelope keeps its ignorable field for stored-log read compatibility only - Session.append still cannot stamp it, so audit-gate behavior is unchanged.
   gate degrades to skip-unknown, so audit events are dropped (fail closed)
   rather than logged on those hosts.
 - The kit ships no browser UI half; it is a library consumed by the Host (and

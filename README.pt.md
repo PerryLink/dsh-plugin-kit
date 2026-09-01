@@ -1,4 +1,4 @@
-﻿# @perrylink/dsh-plugin-kit
+# @perrylink/dsh-plugin-kit
 - **Canal da loja 1024**: primeiro `npm i -g dsh1024`, depois `dsh1024 plugin --profile web add @perrylink/dsh-plugin-kit` (conta para o ranking de instalações do [deepseek1024.com](https://deepseek1024.com)).
 
 [![npm version](https://img.shields.io/npm/v/@perrylink/dsh-plugin-kit)](https://www.npmjs.com/package/@perrylink/dsh-plugin-kit)
@@ -115,7 +115,8 @@ persista um mapeamento é dono dessa decisão e das permissões de armazenamento
 ## Limitações conhecidas
 
 - Hosts cujo terceiro argumento de `Session.append` é um `SurfaceIntent`
-  (`0.1.2-alpha.1`) lançam `validateNext` na sonda do envelope ignorable; a
+  (`0.1.2-alpha.2`) lançam `validateNext` na sonda do envelope ignorable; a
+0.1.2-alpha.2 (adaptado em 2026-08-31): o envelope de sessão mantém seu campo ignorable apenas para compatibilidade de leitura de logs armazenados - o Session.append ainda não consegue estampá-lo, então o comportamento da porta não muda.
   porta degrada para pular-desconhecido, então eventos de auditoria são
   descartados (fail closed) nesses hosts em vez de registrados.
 - O kit não traz metade de UI de navegador: é uma biblioteca consumida pelas

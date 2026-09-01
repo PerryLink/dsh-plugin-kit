@@ -1,4 +1,4 @@
-﻿# @perrylink/dsh-plugin-kit
+# @perrylink/dsh-plugin-kit
 - **1024 स्टोर चैनल**: पहले `npm i -g dsh1024`, फिर `dsh1024 plugin --profile web add @perrylink/dsh-plugin-kit` ([deepseek1024.com](https://deepseek1024.com) इंस्टॉल रैंकिंग में गिना जाता है)।
 
 [![npm version](https://img.shields.io/npm/v/@perrylink/dsh-plugin-kit)](https://www.npmjs.com/package/@perrylink/dsh-plugin-kit)
@@ -109,7 +109,8 @@ placeholder→original मैपिंग केवल मेमोरी मे
 ## ज्ञात सीमाएँ (Known limitations)
 
 - जिन होस्ट का `Session.append` तीसरा तर्क `SurfaceIntent` है
-  (`0.1.2-alpha.1`), वे ignorable-लिफ़ाफ़ा जाँच पर `validateNext` फेंकते हैं;
+  (`0.1.2-alpha.2`), वे ignorable-लिफ़ाफ़ा जाँच पर `validateNext` फेंकते हैं;
+0.1.2-alpha.2 (2026-08-31 को अनुकूलित): सत्र लिफ़ाफ़ा अपना ignorable फ़ील्ड केवल संग्रहीत-लॉग पठन संगतता के लिए रखता है - Session.append अभी भी इसे स्टैम्प नहीं कर सकता, इसलिए गेट व्यवहार अपरिवर्तित है।
   गेट अज्ञात-छोड़ने में अपमानित होता है, इसलिए ऐसे होस्ट पर ऑडिट घटनाएँ लिखे
   जाने के बजाय छोड़ दी जाती हैं (fail closed)।
 - किट में ब्राउज़र UI आधा नहीं है: यह एक लाइब्रेरी है जिसे अन्य प्लगइन के Host
