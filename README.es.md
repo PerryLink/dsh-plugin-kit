@@ -115,9 +115,9 @@ persista un mapeo es dueño de esa decisión y de sus permisos de almacenamiento
 
 - Los hosts cuyo tercer argumento de `Session.append` es un `SurfaceIntent`
   (`0.1.2-alpha.2`) lanzan `validateNext` ante la sonda del sobre ignorable;
-0.1.2-alpha.2 (adaptado el 2026-08-31): el sobre de sesión conserva su campo ignorable solo para compatibilidad de lectura de logs almacenados - Session.append aún no puede estamparlo, por lo que el comportamiento de la puerta no cambia.
   la puerta degrada a omitir-desconocido, de modo que los eventos de auditoría
   se descartan (fail closed) en esos hosts en lugar de registrarse.
+- 0.1.2-alpha.2 (adaptado el 2026-08-31): el sobre de sesión conserva su campo ignorable solo para compatibilidad de lectura de logs almacenados - Session.append aún no puede estamparlo, por lo que el comportamiento de la puerta no cambia.
 - El kit no trae mitad de UI de navegador: es una biblioteca consumida por las
   mitades Host (y opcionalmente Client) de otros plugins.
 

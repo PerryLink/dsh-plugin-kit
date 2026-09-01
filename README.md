@@ -113,9 +113,9 @@ mapping owns that decision and its storage permissions.
 
 - Hosts whose `Session.append` third argument is a `SurfaceIntent`
   (`0.1.2-alpha.2`) throw `validateNext` on the ignorable-envelope probe; the
-0.1.2-alpha.2 (adapted 2026-08-31): the session envelope keeps its ignorable field for stored-log read compatibility only - Session.append still cannot stamp it, so audit-gate behavior is unchanged.
   gate degrades to skip-unknown, so audit events are dropped (fail closed)
   rather than logged on those hosts.
+- 0.1.2-alpha.2 (adapted 2026-08-31): the session envelope keeps its ignorable field for stored-log read compatibility only - Session.append still cannot stamp it, so audit-gate behavior is unchanged.
 - The kit ships no browser UI half; it is a library consumed by the Host (and
   optionally Client) halves of other plugins.
 
