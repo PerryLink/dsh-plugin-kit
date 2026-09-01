@@ -2,4 +2,6 @@
 # deepseek-harness workspace so `pnpm install` resolves only this package.
 packages:
   - "."
+minimumReleaseAgeExclude:
+  - '@deepseek-ai/*'
 verifyDepsBeforeRun: false
