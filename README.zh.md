@@ -97,10 +97,10 @@ bundle-patch 层，供 harness profile 组合使用；它不挂载插件行（�
 
 ## 已知限制
 
-- `Session.append` 第三参为 `SurfaceIntent` 的宿主（`0.1.2-alpha.3`）会对 ignorable
+- `Session.append` 第三参为 `SurfaceIntent` 的宿主（`0.1.2-alpha.5`）会对 ignorable
   信封探测抛 `validateNext`；门退化为跳过未知类型，即该类宿主上审计事件被丢弃
   （fail closed）而非写入。
-- 0.1.2-alpha.3（2026-09-01 已适配）：会话信封保留 ignorable 字段但仅用于存量日志读取兼容——Session.append 仍无法盖章，门控行为不变。
+- 0.1.2-alpha.5（2026-09-02 已适配）：会话信封保留 ignorable 字段但仅用于存量日志读取兼容——Session.append 仍无法盖章，门控行为不变。
 - 本包无浏览器 UI 半：它是被其他插件 Host（及可选 Client）半消费的库。
 
 ## 开发

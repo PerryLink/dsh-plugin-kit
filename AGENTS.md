@@ -16,7 +16,7 @@ Harness `AGENTS.md`; this file records only what is decided *here*.
   errors: hosts whose third append argument is a `SurfaceIntent`
   (`0.1.2-alpha.1` onward) throw `validateNext` on the probe options bag
   for surface probe types and ignore it for log-only types — either way
-  the probe reports `false`. `0.1.2-alpha.3` retains the `ignorable?: true`
+  the probe reports `false`. `0.1.2-alpha.5` retains the `ignorable?: true`
   envelope field for stored-log read compatibility only; `Session.append`
   still cannot stamp it.
 - **Judge schema**: `src/shared/judge.ts` `ObjectJsonSchema` mirrors the host

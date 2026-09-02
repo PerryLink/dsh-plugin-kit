@@ -115,10 +115,10 @@ persista um mapeamento é dono dessa decisão e das permissões de armazenamento
 ## Limitações conhecidas
 
 - Hosts cujo terceiro argumento de `Session.append` é um `SurfaceIntent`
-  (`0.1.2-alpha.3`) lançam `validateNext` na sonda do envelope ignorable; a
+  (`0.1.2-alpha.5`) lançam `validateNext` na sonda do envelope ignorable; a
   porta degrada para pular-desconhecido, então eventos de auditoria são
   descartados (fail closed) nesses hosts em vez de registrados.
-- 0.1.2-alpha.3 (adaptado em 2026-09-01): o envelope de sessão mantém seu campo ignorable apenas para compatibilidade de leitura de logs armazenados - o Session.append ainda não consegue estampá-lo, então o comportamento da porta não muda.
+- 0.1.2-alpha.5 (adaptado em 2026-09-02): o envelope de sessão mantém seu campo ignorable apenas para compatibilidade de leitura de logs armazenados - o Session.append ainda não consegue estampá-lo, então o comportamento da porta não muda.
 - O kit não traz metade de UI de navegador: é uma biblioteca consumida pelas
   metades Host (e opcionalmente Client) de outros plugins.
 
