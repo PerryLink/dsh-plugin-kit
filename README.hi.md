@@ -15,7 +15,7 @@ PerryLink DSH प्लगइन रिपॉज़िटरीज़ के ल
 
 - **DSH harness**: किट रनटाइम पर `@deepseek-ai/*` से कुछ भी import नहीं करता।
   `@deepseek-ai/cordis` (`^4.0.2`), `@deepseek-ai/schemastery` (`^3.18.2`) और
-  `@deepseek-ai/dsh-*` पैकेज 33 रिपोज़ की साझा `>=0.1.0-rc.8 <0.2.0` बैंड में
+  `@deepseek-ai/dsh-*` पैकेज PerryLink प्लगइन रिपोज़ की साझा `>=0.1.2-rc.1 <0.2.0` बैंड में
   **वैकल्पिक** peer dependencies हैं; वे केवल टाइप इंटरऑप के लिए हैं।
 - **Node**: `^22.19.0 || >=24.0.0`, केवल ESM।
 - **वायर अनुकूलता**: नाम और आकृतियाँ `dsh-mask` (sanitize), `dsh-budget`

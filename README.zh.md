@@ -13,7 +13,7 @@
 
 - **DSH harness**：本包运行时零 `@deepseek-ai/*` import。`@deepseek-ai/cordis`
   （`^4.0.2`）、`@deepseek-ai/schemastery`（`^3.18.2`）与各 `@deepseek-ai/dsh-*`
-  包均声明为**可选** peer 依赖，区间与 33 仓一致（`>=0.1.0-rc.8 <0.2.0`），仅用于
+  包均声明为**可选** peer 依赖，区间与 PerryLink 各插件仓一致（`>=0.1.2-rc.1 <0.2.0`），仅用于
   类型互通。
 - **Node**：`^22.19.0 || >=24.0.0`，仅 ESM。
 - **线级兼容**：函数名与形状对齐 `dsh-mask`（sanitize）、`dsh-budget`（pricing）、
