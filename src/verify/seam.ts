@@ -52,9 +52,12 @@ export function verifySeam(dir: string, options: VerifySeamOptions = {}): Verify
   const sourceDir = options.sourceDir ?? 'src'
   const errors: VerifyIssue[] = []
 
-  const files = listFiles(dir, SOURCE_EXTS).filter(path => path.startsWith(`${sourceDir}/`) || path.startsWith(`${sourceDir}\\`))
+  const srcFiles = listFiles(dir, SOURCE_EXTS).filter(path => path.startsWith(`${sourceDir}/`) || path.startsWith(`${sourceDir}\\`))
+  // 纯 JS 仓（无 src/ 目录，入口在仓库根，如 index.mjs）：回退扫描根层源文件
+  // （listFiles 已排除 node_modules/.git/lib/coverage，根层即发布面源码）
+  const files = srcFiles.length > 0 ? srcFiles : listFiles(dir, SOURCE_EXTS).filter(path => !path.includes('/'))
   if (files.length === 0) {
-    errors.push({ path: sourceDir, message: `no source files found under ${sourceDir}` })
+    errors.push({ path: sourceDir, message: `no source files found under ${sourceDir} or the repo root` })
     return report(errors)
   }
 
