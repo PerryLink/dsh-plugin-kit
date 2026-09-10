@@ -27,8 +27,8 @@ Harness `AGENTS.md`; this file records only what is decided *here*.
 
 ## Docs
 
-- Five-language READMEs: `README.md` is the source; `README.zh.md`,
-  `README.es.md`, `README.pt.md`, `README.hi.md` follow the same section
+- Five-language READMEs: `README.md` is the source; `README-zh.md`,
+  `README-es.md`, `README-pt.md`, `README-hi.md` follow the same section
   order (Compatibility / What you get / Quick start / Install & uninstall /
   Configuration / Tools & surfaces / Permissions & data / Security
   boundaries / Known limitations / Development / Topics / Contributors /

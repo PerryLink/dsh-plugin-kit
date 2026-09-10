@@ -13,9 +13,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Rename the four translated READMEs to `README-<lang>.md`. npm selects the package-page readme as the first markdown file matching its `{README,README.*}` glob (`@npmcli/package-json`, publish path), and that glob order puts `README.<lang>.md` ahead of `README.md` — so npm was serving the Simplified-Chinese file for this package too (measured on 15/15 sampled packages of the family). The new names sit outside the glob, so the English source is served again. No content changed apart from the language-switcher link each translation holds to its siblings, and the repo readme gate still passes. Takes effect with the next release; an already-published version cannot gain a corrected readme retroactively.
 - `data/peer-range.json` canonical range is now `>=0.1.2-rc.1 <0.2.0 || >=0.1.5-alpha.1 <0.2.0` (was the stale `>=0.1.0-rc.8 <0.2.0` from 2026-08-26), which is what the ecosystem already declares.
 - `scripts/sync-peer-range.mjs` understands the `||`-joined clause form: `parseRangeSet`/`formatRangeSet` were added and `rangeStatus`/`targetRange` now compare clause sets instead of a single floor/upper pair. The single-clause `parseRange` keeps its old signature, so existing callers and tests are unaffected.
 - The release workflow now creates the GitHub Release itself, with the body taken from this version's CHANGELOG section. Until now a `v*` tag published to npm and stopped there, so every Release page had to be created by hand afterwards.
+
+### Fixed
+
+- `verifyReadmeLanguages` now expects `README-<lang>.md`. It built the dotted name from a template, so a textual rename cannot see it — this is the one place in the fleet that constructs the filename dynamically, and its own test is what caught the mismatch. Nothing consumes this verifier yet (each repo carries its own `verify-readmes` copy), so the change stays inside this repo.
 
 ## [0.1.8] - 2026-09-10
 
@@ -77,8 +82,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Five-language READMEs (`README.md`, `README.zh.md`, `README.es.md`,
-  `README.pt.md`, `README.hi.md`) in the standard section order
+- Five-language READMEs (`README.md`, `README-zh.md`, `README-es.md`,
+  `README-pt.md`, `README-hi.md`) in the standard section order
   (Compatibility / What you get / Quick start / Install & uninstall /
   Configuration / Tools & surfaces / Permissions & data / Security
   boundaries / Known limitations / Development / Topics / Contributors /

@@ -1,6 +1,10 @@
 /**
  * Mechanical README-language gate: the English base `README.md` must exist and
- * every configured language must have a non-empty `README.<lang>.md`. This is
+ * every configured language must have a non-empty `README-<lang>.md`. The
+ * hyphen form is deliberate — npm picks the package-page readme as the first
+ * markdown file matching its `{README,README.*}` glob, and `README.<lang>.md`
+ * sorts ahead of `README.md` there, so the dotted form silently made every
+ * published package of this family show a translation. This is
  * the single-language-check core the 33 repos' five-language `verify-readmes`
  * scripts reduce to; configure `languages` to match a repo's translation set.
  *
@@ -12,7 +16,7 @@ import { readText, report, type VerifyIssue, type VerifyReport } from './report.
 
 /** Options for {@link verifyReadmeLanguages}. */
 export interface VerifyReadmeLanguagesOptions {
-  /** Language codes whose `README.<code>.md` must exist. Default `['zh']`. */
+  /** Language codes whose `README-<code>.md` must exist. Default `['zh']`. */
   readonly languages?: readonly string[]
 }
 
@@ -33,7 +37,7 @@ export function verifyReadmeLanguages(dir: string, options: VerifyReadmeLanguage
   }
 
   for (const lang of languages) {
-    const name = `README.${lang}.md`
+    const name = `README-${lang}.md`
     const text = readText(join(dir, name))
     if (text === undefined || text.trim().length === 0) {
       errors.push({ path: name, message: `translation ${name} missing or empty` })

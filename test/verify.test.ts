@@ -18,7 +18,7 @@ function makeRepo(): string {
   writeFileSync(join(dir, 'package.json'), JSON.stringify({ license: 'Apache-2.0' }))
   writeFileSync(join(dir, 'LICENSE'), 'Apache-2.0')
   writeFileSync(join(dir, 'README.md'), '# title\n')
-  writeFileSync(join(dir, 'README.zh.md'), '# title\n')
+  writeFileSync(join(dir, 'README-zh.md'), '# title\n')
   mkdirSync(join(dir, 'src'))
   writeFileSync(join(dir, 'src', 'index.ts'), '// Service Definition\n// Service Provider\n// Consumer\n')
   return dir
@@ -35,7 +35,7 @@ describe('verify gates', () => {
   it('verifyReadmeLanguages checks the English base and translations', () => {
     const dir = makeRepo()
     expect(verifyReadmeLanguages(dir).ok).toBe(true)
-    rmSync(join(dir, 'README.zh.md'))
+    rmSync(join(dir, 'README-zh.md'))
     expect(verifyReadmeLanguages(dir).ok).toBe(false)
   })
 
