@@ -19,8 +19,8 @@ ESM + TypeScript.
   execução. `@deepseek-ai/cordis` (`^4.0.2`), `@deepseek-ai/schemastery`
   (`^3.18.2`) e os pacotes `@deepseek-ai/dsh-*` são peer dependencies
   **opcionais** na faixa `>=0.1.2-rc.1 <0.2.0` compartilhada pelos repos de plugins da PerryLink;
-  existem apenas para interoperação de tipos. Verificado em 2026-09-06 contra
-  o checkout master `dsh-v0.1.5-alpha.1` (cadeia completa de portas + smoke
+  existem apenas para interoperação de tipos. Verificado em 2026-09-10 contra
+  o checkout master `dsh-v0.1.5-rc.1` (cadeia completa de portas + smoke
   de instalação de perfil).
 - **Node**: `^22.19.0 || >=24.0.0`, somente ESM.
 - **Compatibilidade de formato**: nomes e formas espelham `dsh-mask`
