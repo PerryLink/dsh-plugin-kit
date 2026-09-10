@@ -1,5 +1,5 @@
 {
-  "canonicalRange": ">=0.1.0-rc.8 <0.2.0",
-  "updatedAt": "2026-08-26",
-  "note": "Canonical peerDependencies range for @deepseek-ai/dsh-* across the 34-repo ecosystem. Run `node scripts/sync-peer-range.mjs --dir <reposDir> --write` after a dsh minor/major release to re-pin every repo, then let the shared Renovate preset open the update PRs."
+  "canonicalRange": ">=0.1.2-rc.1 <0.2.0 || >=0.1.5-alpha.1 <0.2.0",
+  "updatedAt": "2026-09-10",
+  "note": "Canonical peerDependencies range for @deepseek-ai/dsh-* across the ecosystem. The OR form is required by semver's prerelease rule: a prerelease version only satisfies a comparator set when a comparator in the same [major, minor, patch] tuple carries a prerelease, so 0.1.5-rc.1 is NOT admitted by the bare '>=0.1.2-rc.1 <0.2.0'. Every new upstream prerelease tuple needs its own clause - run `node scripts/check-peer-range-latest.mjs` to detect a missing one (it reads the published dist-tags and prints the clause to append). Run `node scripts/sync-peer-range.mjs --dir <reposDir> --write` after updating this file to re-pin every repo, then let the shared Renovate preset open the update PRs."
 }

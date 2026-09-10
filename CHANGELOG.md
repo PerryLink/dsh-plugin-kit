@@ -7,8 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `scripts/check-peer-range-latest.mjs` — a dependency-free tripwire that reads the published `@deepseek-ai/dsh` dist-tags and fails when the canonical peer range no longer admits one, printing the clause to append. semver only admits a prerelease when a comparator in the same `[major, minor, patch]` tuple carries a prerelease, so every new upstream prerelease tuple silently stops matching; this turns that into a red gate. Wired into `.github/workflows/peer-range.yml` (push, PR, nightly, manual).
+
 ### Changed
 
+- `data/peer-range.json` canonical range is now `>=0.1.2-rc.1 <0.2.0 || >=0.1.5-alpha.1 <0.2.0` (was the stale `>=0.1.0-rc.8 <0.2.0` from 2026-08-26), which is what the ecosystem already declares.
+- `scripts/sync-peer-range.mjs` understands the `||`-joined clause form: `parseRangeSet`/`formatRangeSet` were added and `rangeStatus`/`targetRange` now compare clause sets instead of a single floor/upper pair. The single-clause `parseRange` keeps its old signature, so existing callers and tests are unaffected.
 - The release workflow now creates the GitHub Release itself, with the body taken from this version's CHANGELOG section. Until now a `v*` tag published to npm and stopped there, so every Release page had to be created by hand afterwards.
 
 ## [0.1.8] - 2026-09-10

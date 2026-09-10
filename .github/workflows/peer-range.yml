@@ -1,0 +1,35 @@
+name: peer-range
+
+# Tripwire for the canonical @deepseek-ai/dsh-* peer range.
+#
+# semver only admits a prerelease version when a comparator in the same
+# [major, minor, patch] tuple carries a prerelease, so every new upstream
+# prerelease tuple silently stops matching the canonical range in
+# data/peer-range.json. This job reads the published dist-tags and fails the
+# moment the range no longer admits one, printing the clause to append.
+on:
+  push:
+    paths:
+      - 'data/peer-range.json'
+      - 'scripts/check-peer-range-latest.mjs'
+      - 'scripts/sync-peer-range.mjs'
+      - '.github/workflows/peer-range.yml'
+  pull_request:
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tripwire:
+    name: canonical range admits the published dist-tags
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # no dependencies: the checker is a dependency-free semver subset
+      - run: node scripts/check-peer-range-latest.mjs

@@ -54,44 +54,97 @@ function countChar(s, ch) {
   return n
 }
 
-const RANGE_RE = /^>=(\S+)\s+<(\S+)$/
+const CLAUSE_RE = /^>=(\S+)\s+<(\S+)$/
 
 /**
- * Parse a `>=floor <upper` range. Returns null for anything else.
+ * Split a range into its `||`-joined `>=floor <upper` clauses.
+ *
+ * Both shapes occur in this ecosystem:
+ * - single clause: `>=0.1.2-rc.1 <0.2.0`
+ * - OR form:       `>=0.1.2-rc.1 <0.2.0 || >=0.1.5-alpha.1 <0.2.0`
+ *
+ * The OR form exists because of semver's prerelease rule: a prerelease version
+ * only satisfies a comparator set when a comparator in the *same*
+ * [major, minor, patch] tuple carries a prerelease. `0.1.5-rc.1` therefore does
+ * NOT satisfy `>=0.1.2-rc.1 <0.2.0`, and every new prerelease tuple needs its
+ * own clause (`scripts/check-peer-range-latest.mjs` is the tripwire for that).
+ *
+ * Returns null when any clause fails to parse.
+ */
+export function parseRangeSet(range) {
+  const parts = String(range)
+    .split('||')
+    .map((s) => s.trim())
+    .filter(Boolean)
+  if (parts.length === 0) return null
+  const clauses = []
+  for (const part of parts) {
+    const m = CLAUSE_RE.exec(part)
+    if (!m) return null
+    clauses.push({ floor: m[1], upper: m[2] })
+  }
+  return clauses
+}
+
+/** Render clauses back into the canonical `||`-joined form. */
+export function formatRangeSet(clauses) {
+  return clauses.map((c) => `>=${c.floor} <${c.upper}`).join(' || ')
+}
+
+/**
+ * Parse a single-clause `>=floor <upper` range. Returns null for anything
+ * else, including the OR form (use {@link parseRangeSet} for that).
+ *
  * Floor comparison uses string ordering, which matches semver for the
  * `0.1.0-rc.8`-style versions in this ecosystem (`0.1.1-rc.2` > `0.1.0-rc.8`,
  * and `0.1.0-rc.8` < `0.1.0`).
  */
 export function parseRange(range) {
-  const m = RANGE_RE.exec(range)
-  return m ? { floor: m[1], upper: m[2] } : null
+  const clauses = parseRangeSet(range)
+  return clauses && clauses.length === 1 ? clauses[0] : null
+}
+
+function maxOf(clauses, key) {
+  return clauses.reduce((acc, c) => (c[key] > acc ? c[key] : acc), clauses[0][key])
 }
 
 /**
  * Classify a declared range against the canonical one:
- * - `ok`            floor and upper bound match
- * - `ok-higher`     same upper bound, higher floor (a real per-package
- *                   requirement, e.g. dsh-session-projection needing 0.1.1-rc.2)
- * - `drift-low`     same upper bound, floor below canonical
+ * - `ok`            identical to the canonical range
+ * - `ok-higher`     same upper bound(s), floors at or above canonical (a real
+ *                   per-package requirement, e.g. a package needing 0.1.5-rc.1)
+ * - `drift-low`     same upper bound(s), at least one floor below canonical
  * - `drift-upper`   upper bound differs (the actual version-lock break)
- * - `unparseable`   range does not match `>=floor <upper`
+ * - `unparseable`   a clause does not match `>=floor <upper`
  */
 export function rangeStatus(current, canonical) {
-  const cur = parseRange(current)
-  const can = parseRange(canonical)
+  if (current === canonical) return 'ok'
+  const cur = parseRangeSet(current)
+  const can = parseRangeSet(canonical)
   if (!cur || !can) return 'unparseable'
-  if (cur.upper !== can.upper) return 'drift-upper'
-  if (cur.floor === can.floor) return 'ok'
-  return cur.floor > can.floor ? 'ok-higher' : 'drift-low'
+  if (maxOf(cur, 'upper') !== maxOf(can, 'upper')) return 'drift-upper'
+  if (cur.length === can.length) {
+    if (cur.every((c, i) => c.floor === can[i].floor)) return 'ok'
+    return cur.every((c, i) => c.floor >= can[i].floor) ? 'ok-higher' : 'drift-low'
+  }
+  return maxOf(cur, 'floor') >= maxOf(can, 'floor') ? 'ok-higher' : 'drift-low'
 }
 
-/** Target range for a drifting key: highest required floor, canonical upper. */
+/**
+ * Target range for a drifting key: the canonical clause set, keeping the
+ * higher of each pairwise floor. Clause counts that differ fall back to the
+ * canonical range as-is (a clause was added or removed upstream).
+ */
 export function targetRange(current, canonical) {
-  const cur = parseRange(current)
-  const can = parseRange(canonical)
-  if (!cur || !can) return canonical
-  const floor = cur.floor > can.floor ? cur.floor : can.floor
-  return `>=${floor} <${can.upper}`
+  const cur = parseRangeSet(current)
+  const can = parseRangeSet(canonical)
+  if (!cur || !can || cur.length !== can.length) return canonical
+  return formatRangeSet(
+    can.map((c, i) => ({
+      floor: cur[i].floor > c.floor ? cur[i].floor : c.floor,
+      upper: c.upper,
+    })),
+  )
 }
 
 /**
