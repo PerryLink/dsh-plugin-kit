@@ -1,4 +1,4 @@
-﻿{
+{
   // CI face: typecheck against the types installed in node_modules (published
   // packages). The kit has no checkout `paths` aliases and imports nothing
   // from `@deepseek-ai/*`, so this is the same program as `tsconfig.json`;

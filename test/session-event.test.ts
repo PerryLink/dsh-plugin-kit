@@ -1,4 +1,4 @@
-﻿import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { makeEventGate, maybeAppendSessionEvent, probeIgnorableAppend } from '../src/gates/session-event.ts'
 import type { AppendableSession } from '../src/gates/session-event.ts'
 

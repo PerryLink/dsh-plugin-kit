@@ -1,4 +1,4 @@
-﻿import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { DEFAULT_FALLBACK, applyFailClosed } from '../src/gates/approval.ts'
 
 describe('applyFailClosed', () => {

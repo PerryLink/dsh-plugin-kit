@@ -1,4 +1,4 @@
-﻿// Verify the built artifacts after `pnpm run build`: syntax-check the ESM
+// Verify the built artifacts after `pnpm run build`: syntax-check the ESM
 // entry, import it under plain Node, and assert the shipped files exist.
 // Guards against TypeScript-only syntax leaking into shipped output and
 // against a tarball missing the bundle patch.

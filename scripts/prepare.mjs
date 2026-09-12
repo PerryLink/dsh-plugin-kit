@@ -1,4 +1,4 @@
-﻿// Self-contained build used by both `pnpm run build` and the git-install
+// Self-contained build used by both `pnpm run build` and the git-install
 // `prepare` lifecycle: emits lib/ (tsc ESM + declarations). Uses ONLY build
 // tools declared in `dependencies` because pnpm does not install
 // devDependencies of git-hosted packages.
