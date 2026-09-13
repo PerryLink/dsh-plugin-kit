@@ -75,7 +75,20 @@ const active = registry.use('ner') ?? registry.use()
 
 ## Install & uninstall
 
-Install is `pnpm add` (see Quick start). Remove with:
+As a library, install is `pnpm add` (see Quick start). The package also ships an
+intentionally empty `dsh.bundle.patch` layer (`cordis.patch.yml`), so it flows
+through the harness bundle channel when a profile wants the kit mounted as a
+package:
+
+```sh
+# npm channel (published releases)
+dsh plugin --profile web add @perrylink/dsh-plugin-kit
+
+# git channel (latest master)
+dsh plugin --profile web add "github:PerryLink/dsh-plugin-kit#master"
+```
+
+Remove with:
 
 ```sh
 pnpm remove @perrylink/dsh-plugin-kit
