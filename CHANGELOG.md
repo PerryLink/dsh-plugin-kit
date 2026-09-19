@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- The canonical `@deepseek-ai/dsh-*` peer range now admits the `0.1.6-alpha.2` tuple (`|| >=0.1.6-0 <0.2.0`). The `peer-range` tripwire has been failing on `master` since that tuple was published, because semver's prerelease rule gives every new tuple its own clause; the three peers this package declares are re-pinned in the same commit, the lockfile's specifiers follow, and the `sync-peer-range` fixture's "higher-floor" example was raised above the new floor.
 ## [0.1.9] - 2026-09-12
 
 ### Added

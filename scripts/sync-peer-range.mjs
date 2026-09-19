@@ -61,7 +61,7 @@ const CLAUSE_RE = /^>=(\S+)\s+<(\S+)$/
  *
  * Both shapes occur in this ecosystem:
  * - single clause: `>=0.1.2-rc.1 <0.2.0`
- * - OR form:       `>=0.1.2-rc.1 <0.2.0 || >=0.1.5-alpha.1 <0.2.0`
+ * - OR form:       `>=0.1.2-rc.1 <0.2.0 || >=0.1.5-alpha.1 <0.2.0 || >=0.1.6-0 <0.2.0`
  *
  * The OR form exists because of semver's prerelease rule: a prerelease version
  * only satisfies a comparator set when a comparator in the *same*
