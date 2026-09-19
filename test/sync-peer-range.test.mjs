@@ -144,7 +144,8 @@ describe('CLI end-to-end', () => {
       await readFile(resolve(import.meta.dirname, '..', 'data', 'peer-range.json'), 'utf8'),
     ).canonicalRange
     // above every canonical floor: a real per-package requirement, left alone
-    const highFloor = '>=0.1.5-rc.1 <0.2.0'
+    // (raised together with canonicalRange's newest tuple, 2026-09-19)
+    const highFloor = '>=0.1.6-rc.1 <0.2.0'
     const repoDir = join(dir, 'cli-repo')
     await mkdir(repoDir, { recursive: true })
     const pkg = join(repoDir, 'package.json')
