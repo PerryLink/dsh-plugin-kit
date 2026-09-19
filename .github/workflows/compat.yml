@@ -41,6 +41,7 @@ jobs:
           node --input-type=module -e "import('@perrylink/dsh-plugin-kit').then(m=>{if(typeof m.makeEventGate!=='function'){console.error('unexpected library face');process.exit(1)}}).catch(e=>{console.error(e);process.exit(1)})"
   profile:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
