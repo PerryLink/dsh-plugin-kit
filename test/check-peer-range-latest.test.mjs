@@ -8,7 +8,7 @@ import {
   suggestedClause,
 } from '../scripts/check-peer-range-latest.mjs'
 
-const CANONICAL = '>=0.1.2-rc.1 <0.2.0 || >=0.1.5-alpha.1 <0.2.0'
+const CANONICAL = '>=0.1.2-rc.1 <0.2.0 || >=0.1.5-alpha.1 <0.2.0 || >=0.1.6-0 <0.2.0'
 
 describe('parseVersion / compareVersions', () => {
   it('parses release and prerelease versions', () => {
@@ -54,8 +54,14 @@ describe('satisfiesRange', () => {
     expect(satisfiesRange('0.1.6', CANONICAL)).toBe(true)
   })
 
+  it('admits the 0.1.6 tuple through its own -0 clause', () => {
+    expect(satisfiesRange('0.1.6-rc.1', CANONICAL)).toBe(true)
+    expect(satisfiesRange('0.1.6-alpha.0', CANONICAL)).toBe(true)
+    expect(satisfiesRange('0.1.6-alpha.2', CANONICAL)).toBe(true)
+  })
+
   it('does NOT admit a future prerelease tuple (the reason the tripwire exists)', () => {
-    expect(satisfiesRange('0.1.6-rc.1', CANONICAL)).toBe(false)
+    expect(satisfiesRange('0.1.7-rc.1', CANONICAL)).toBe(false)
   })
 
   it('rejects unparseable input instead of throwing', () => {

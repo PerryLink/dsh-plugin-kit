@@ -74,6 +74,21 @@ describe('OR-form range sets', () => {
     expect(targetRange('>=0.1.2-rc.1 <0.2.0', OR)).toBe(OR)
     expect(targetRange('>=0.1.1-rc.2 <0.2.0', OR)).toBe(OR)
   })
+
+  it('merges per-tuple floors when clause counts differ (R3 fix)', () => {
+    const THREE = '>=0.1.2-rc.1 <0.2.0 || >=0.1.5-alpha.1 <0.2.0 || >=0.1.6-0 <0.2.0'
+    // the old two-clause canonical gains the new tuple clause
+    expect(targetRange('>=0.1.2-rc.1 <0.2.0 || >=0.1.5-alpha.1 <0.2.0', THREE)).toBe(THREE)
+    // a current two-clause range with a real higher floor keeps it while the
+    // third clause is added - the old early return silently lost the rc.1
+    expect(targetRange('>=0.1.2-rc.1 <0.2.0 || >=0.1.5-rc.1 <0.2.0', THREE)).toBe(
+      '>=0.1.2-rc.1 <0.2.0 || >=0.1.5-rc.1 <0.2.0 || >=0.1.6-0 <0.2.0',
+    )
+    // even a single-clause higher floor is preserved while the set is raised
+    expect(targetRange('>=0.1.5-rc.1 <0.2.0', THREE)).toBe(
+      '>=0.1.2-rc.1 <0.2.0 || >=0.1.5-rc.1 <0.2.0 || >=0.1.6-0 <0.2.0',
+    )
+  })
 })
 
 describe('rewritePeerRange', () => {
@@ -139,13 +154,13 @@ describe('currentPeerRanges', () => {
 })
 
 describe('CLI end-to-end', () => {
-  it('reports drift without --write and rewrites only drifting keys with --write', async () => {
+  it('reports drift without --write; --write adds the third clause and keeps a higher floor', async () => {
     const canonical = JSON.parse(
       await readFile(resolve(import.meta.dirname, '..', 'data', 'peer-range.json'), 'utf8'),
     ).canonicalRange
-    // above every canonical floor: a real per-package requirement, left alone
-    // (raised together with canonicalRange's newest tuple, 2026-09-19)
-    const highFloor = '>=0.1.6-rc.1 <0.2.0'
+    // two-clause current with a real higher floor in the 0.1.5 tuple: the
+    // rewrite must preserve it while adding the third canonical clause
+    const highFloor = '>=0.1.2-rc.1 <0.2.0 || >=0.1.5-rc.1 <0.2.0'
     const repoDir = join(dir, 'cli-repo')
     await mkdir(repoDir, { recursive: true })
     const pkg = join(repoDir, 'package.json')
@@ -158,11 +173,13 @@ describe('CLI end-to-end', () => {
     expect(report).toContain('cli-repo\tdrift')
     expect(report).toContain('@deepseek-ai/dsh-session: drift-low')
     const rewrite = execFileSync(process.execPath, [script, '--dir', dir, '--write'], { encoding: 'utf8' })
-    expect(rewrite).toContain('rewritten (1 keys)')
+    expect(rewrite).toContain('rewritten (2 keys)')
     const after = await readFile(pkg, 'utf8')
     expect(after).toContain(`"@deepseek-ai/dsh-session": "${canonical}"`)
-    // higher-floor key untouched by the rewrite
-    expect(after).toContain(`"@deepseek-ai/dsh-projection": "${highFloor}"`)
+    // the higher 0.1.5 floor survives the rewrite and the third clause is added
+    expect(after).toContain(
+      `"@deepseek-ai/dsh-projection": ">=0.1.2-rc.1 <0.2.0 || >=0.1.5-rc.1 <0.2.0 || >=0.1.6-0 <0.2.0"`,
+    )
     const second = execFileSync(process.execPath, [script, '--dir', dir], { encoding: 'utf8' })
     expect(second).toContain('cli-repo\tok (1 higher-floor)')
   })

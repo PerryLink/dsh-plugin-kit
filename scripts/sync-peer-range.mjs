@@ -130,21 +130,49 @@ export function rangeStatus(current, canonical) {
   return maxOf(cur, 'floor') >= maxOf(can, 'floor') ? 'ok-higher' : 'drift-low'
 }
 
+/** `0.1.6-0` / `0.1.5-alpha.1` -> `0.1.6` / `0.1.5` (the [major, minor, patch] tuple). */
+function floorTuple(floor) {
+  return String(floor).split('-')[0]
+}
+
 /**
  * Target range for a drifting key: the canonical clause set, keeping the
- * higher of each pairwise floor. Clause counts that differ fall back to the
- * canonical range as-is (a clause was added or removed upstream).
+ * higher of each floor. Equal-length sets merge pairwise by position; when
+ * the counts differ, clauses pair up by [major, minor, patch] tuple instead,
+ * so a repo that carries a real higher floor in one tuple (e.g.
+ * `>=0.1.5-rc.1` where canonical says `>=0.1.5-alpha.1`) keeps it even when
+ * canonical gains a clause - the old `length !== length` early return
+ * silently dropped such floors back to canonical. A current clause whose
+ * tuple canonical does not carry is preserved only when its floor is above
+ * every canonical floor (a genuinely higher requirement); anything below is
+ * drift-low and is raised to the canonical clause set.
  */
 export function targetRange(current, canonical) {
   const cur = parseRangeSet(current)
   const can = parseRangeSet(canonical)
-  if (!cur || !can || cur.length !== can.length) return canonical
-  return formatRangeSet(
-    can.map((c, i) => ({
-      floor: cur[i].floor > c.floor ? cur[i].floor : c.floor,
-      upper: c.upper,
-    })),
-  )
+  if (!cur || !can) return canonical
+  if (cur.length === can.length) {
+    return formatRangeSet(
+      can.map((c, i) => ({
+        floor: cur[i].floor > c.floor ? cur[i].floor : c.floor,
+        upper: c.upper,
+      })),
+    )
+  }
+  const curByTuple = new Map(cur.map((c) => [floorTuple(c.floor), c]))
+  const merged = can.map((c) => {
+    const pair = curByTuple.get(floorTuple(c.floor))
+    if (pair) curByTuple.delete(floorTuple(c.floor))
+    return pair
+      ? { floor: pair.floor > c.floor ? pair.floor : c.floor, upper: c.upper }
+      : c
+  })
+  const maxFloor = maxOf(can, 'floor')
+  const upper = maxOf(can, 'upper')
+  for (const extra of curByTuple.values()) {
+    if (extra.floor > maxFloor) merged.push({ floor: extra.floor, upper })
+  }
+  return formatRangeSet(merged)
 }
 
 /**
