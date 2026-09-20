@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The canonical `@deepseek-ai/dsh-*` peer range now admits the `0.1.6-alpha.2` tuple (`|| >=0.1.6-0 <0.2.0`). The `peer-range` tripwire has been failing on `master` since that tuple was published, because semver's prerelease rule gives every new tuple its own clause; the three peers this package declares are re-pinned in the same commit, the lockfile's specifiers follow, and the `sync-peer-range` fixture's "higher-floor" example was raised above the new floor.
 - `scripts/sync-peer-range.mjs` no longer discards a real higher floor when the clause counts differ. `targetRange()` returned the canonical range as soon as `current.length !== canonical.length`, which was harmless only while canonical never changed length - and adding the `0.1.6-0` clause changed exactly that. A repo declaring `>=0.1.2-rc.1 <0.2.0 || >=0.1.5-rc.1 <0.2.0` (a genuinely higher 0.1.5 floor) was silently rewritten down to canonical's `>=0.1.5-alpha.1`; the same held for a single-clause `>=0.1.5-rc.1 <0.2.0`. Clauses now pair by `[major, minor, patch]` tuple when the counts differ, so the higher floor survives while the new clause is added, and a current clause in a tuple canonical does not carry is kept only when its floor is above every canonical floor. `test/sync-peer-range.test.mjs` covers the two-clause and single-clause cases, and the end-to-end fixture now exercises the merge instead of the raised-floor bypass.
+
+### Changed
+
+- `compat.yml` runs weekly (`0 4 * * 1`) instead of monthly, and on pull requests, so a newly published upstream tuple is caught by the compatibility probe within a week rather than up to a month - the delay that let the `0.1.6` tuple trip the wire. The scratch profile pins `@deepseek-ai/dsh@0.1.6-alpha.2`, `dsh-base`/`dsh-headless@0.1.6-alpha.2`, and sets `minimumReleaseAge: 0` (pnpm 11's default age gate would otherwise keep a fresh `@deepseek-ai` prerelease red for 24h). The 25-minute job cap added in #1 is kept.
 ## [0.1.9] - 2026-09-12
 
 ### Added
