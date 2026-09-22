@@ -74,7 +74,17 @@ const active = registry.use('ner') ?? registry.use()
 
 ## इंस्टॉल और अनइंस्टॉल (Install & uninstall)
 
-इंस्टॉल `pnpm add` है (त्वरित शुरुआत देखें)। हटाने के लिए:
+इंस्टॉल `pnpm add` है (त्वरित शुरुआत देखें)। यह पैकेज जान-बूझकर खाली `dsh.bundle.patch` परत (`cordis.patch.yml`) भी लाता है, इसलिए जब कोई profile kit को पैकेज के रूप में माउंट करना चाहे तो यह harness के bundle चैनल से भी जाता है:
+
+```sh
+# npm चैनल (प्रकाशित रिलीज़)
+dsh plugin --profile web add @perrylink/dsh-plugin-kit
+
+# git चैनल (नवीनतम master)
+dsh plugin --profile web add "github:PerryLink/dsh-plugin-kit#master"
+```
+
+हटाने के लिए:
 
 ```sh
 pnpm remove @perrylink/dsh-plugin-kit

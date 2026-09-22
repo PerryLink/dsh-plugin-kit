@@ -78,7 +78,17 @@ const active = registry.use('ner') ?? registry.use()
 
 ## Instalar e desinstalar
 
-A instalação é `pnpm add` (ver Início rápido). Para remover:
+A instalação é `pnpm add` (ver Início rápido). O pacote também traz uma camada `dsh.bundle.patch` deliberadamente vazia (`cordis.patch.yml`), então ele também flui pelo canal bundle do harness quando um perfil quer montar o kit como pacote:
+
+```sh
+# canal npm (versões publicadas)
+dsh plugin --profile web add @perrylink/dsh-plugin-kit
+
+# canal git (master mais recente)
+dsh plugin --profile web add "github:PerryLink/dsh-plugin-kit#master"
+```
+
+Para remover:
 
 ```sh
 pnpm remove @perrylink/dsh-plugin-kit

@@ -66,7 +66,17 @@ const active = registry.use('ner') ?? registry.use()
 
 ## 安装与卸载
 
-安装即 `pnpm add`（见快速开始）。移除：
+安装即 `pnpm add`（见快速开始）。本包还带一层**有意留空**的 `dsh.bundle.patch`（`cordis.patch.yml`），因此当某个 profile 想把本 kit 作为包挂载时，它也能走 harness 的 bundle 通道：
+
+```sh
+# npm 渠道（正式发布版）
+dsh plugin --profile web add @perrylink/dsh-plugin-kit
+
+# git 渠道（最新 master）
+dsh plugin --profile web add "github:PerryLink/dsh-plugin-kit#master"
+```
+
+移除：
 
 ```sh
 pnpm remove @perrylink/dsh-plugin-kit
