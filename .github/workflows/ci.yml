@@ -29,4 +29,6 @@ jobs:
       - run: pnpm run build
       - run: pnpm run verify:self-contained
       - run: pnpm run verify:artifacts
+      - name: README sync (five languages)
+        run: pnpm run check:readmes
       - run: pnpm pack
