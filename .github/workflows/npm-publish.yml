@@ -79,6 +79,15 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    # Declared HERE, not left to the caller. As a reusable workflow this job
+    # inherited `id-token: write` from `release.yml`, so a direct dispatch had no
+    # OIDC token at all and the run died at "OIDC request TOKEN: MISSING" before
+    # the exchange. Declaring it makes the workflow correct in both modes; a
+    # caller that grants the same permission is unaffected (it is the same grant,
+    # not a wider one).
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
