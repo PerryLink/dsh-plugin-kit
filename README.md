@@ -27,7 +27,8 @@ ESM + TypeScript package.
 - **DSH harness**: the kit imports nothing from `@deepseek-ai/*` at runtime.
   `@deepseek-ai/cordis` (`^4.0.4`), `@deepseek-ai/schemastery` (`^3.18.4`),
   and the `@deepseek-ai/dsh-*` packages are **optional** peer dependencies in
-  the `>=0.1.2-rc.1 <0.2.0` band the PerryLink plugin repos share; they exist only for type
+  the `>=0.1.2-rc.1 <0.2.0 || >=0.1.5-alpha.1 <0.2.0 || >=0.1.6-0 <0.2.0 || >=0.1.7-0 <0.2.0`
+  band the PerryLink plugin repos share; they exist only for type
   interop. Verified 2026-09-11 against the dsh-v0.1.7-alpha.1 master checkout
   (full gate chain + profile install smoke), and re-verified 2026-09-23 against
   the dsh-v0.1.7-alpha.2 checkout.

@@ -41,8 +41,14 @@ Harness `AGENTS.md`; this file records only what is decided *here*.
   has one library face, not a bundled plugin face.
 - `typescript` lives in `dependencies` so the git install channel can run
   `prepare` without devDependencies.
-- `typecheck:ci` runs `tsc -p tsconfig.ci.json`; the kit has no checkout
-  `paths` aliases, so it equals `typecheck` until one is added.
+- `typecheck` runs `tsc -p tsconfig.json` against the installed host faces;
+  `typecheck:ci` runs `tsc -p tsconfig.ci.json` (published `node_modules`
+  types); `typecheck:checkout` runs `tsc -p tsconfig.checkout.json`, which
+  extends `tsconfig.json` with a deliberately EMPTY `paths` table (the kit
+  imports nothing from `@deepseek-ai/*`, so there is no specifier to alias).
+  All three are therefore the same program today and must agree; the checkout
+  face exists to be the single place an alias is added the day a host import
+  lands in `src/`.
 
 ## Notices
 
