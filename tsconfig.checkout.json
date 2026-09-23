@@ -1,0 +1,20 @@
+{
+  // Checkout ruler face. The kit imports NOTHING from `@deepseek-ai/*`: no
+  // runtime import, no type-only import, no dynamic import anywhere under
+  // src/ or test/ (verified with `grep -n "@deepseek-ai/" src test`), which is
+  // the kit's whole design — a zero-runtime-dependency seam/gate/verify
+  // toolkit whose host-shaped types (`ObjectJsonSchema`, the approval
+  // vocabulary, the session-event gate) are deliberately structural mirrors.
+  // `tsconfig.ci.json` records the same fact from the other side.
+  //
+  // So the `paths` table is deliberately EMPTY: there is no specifier in this
+  // program to alias, and listing packages the program never imports would
+  // only look like coverage. This face exists to keep the ruler explicit per
+  // repository and to be the single place an alias is added the day a host
+  // import lands in `src/`. It is therefore, today, the same program as
+  // `typecheck` — and `typecheck:checkout` is expected to agree with it.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {}
+  }
+}

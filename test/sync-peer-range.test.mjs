@@ -154,12 +154,12 @@ describe('currentPeerRanges', () => {
 })
 
 describe('CLI end-to-end', () => {
-  it('reports drift without --write; --write adds the third clause and keeps a higher floor', async () => {
+  it('reports drift without --write; --write adds the missing clauses and keeps a higher floor', async () => {
     const canonical = JSON.parse(
       await readFile(resolve(import.meta.dirname, '..', 'data', 'peer-range.json'), 'utf8'),
     ).canonicalRange
     // two-clause current with a real higher floor in the 0.1.5 tuple: the
-    // rewrite must preserve it while adding the third canonical clause
+    // rewrite must preserve it while adding every canonical clause it lacks
     const highFloor = '>=0.1.2-rc.1 <0.2.0 || >=0.1.5-rc.1 <0.2.0'
     const repoDir = join(dir, 'cli-repo')
     await mkdir(repoDir, { recursive: true })
@@ -176,9 +176,9 @@ describe('CLI end-to-end', () => {
     expect(rewrite).toContain('rewritten (2 keys)')
     const after = await readFile(pkg, 'utf8')
     expect(after).toContain(`"@deepseek-ai/dsh-session": "${canonical}"`)
-    // the higher 0.1.5 floor survives the rewrite and the third clause is added
+    // the higher 0.1.5 floor survives the rewrite and the missing clauses are added
     expect(after).toContain(
-      `"@deepseek-ai/dsh-projection": ">=0.1.2-rc.1 <0.2.0 || >=0.1.5-rc.1 <0.2.0 || >=0.1.6-0 <0.2.0"`,
+      `"@deepseek-ai/dsh-projection": ">=0.1.2-rc.1 <0.2.0 || >=0.1.5-rc.1 <0.2.0 || >=0.1.6-0 <0.2.0 || >=0.1.7-0 <0.2.0"`,
     )
     const second = execFileSync(process.execPath, [script, '--dir', dir], { encoding: 'utf8' })
     expect(second).toContain('cli-repo\tok (1 higher-floor)')

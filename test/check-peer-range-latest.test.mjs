@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 
 import {
@@ -8,7 +10,12 @@ import {
   suggestedClause,
 } from '../scripts/check-peer-range-latest.mjs'
 
-const CANONICAL = '>=0.1.2-rc.1 <0.2.0 || >=0.1.5-alpha.1 <0.2.0 || >=0.1.6-0 <0.2.0'
+// Single-sourced from the file the tripwire reads: a literal here drifts the
+// moment the canonical range gains a prerelease tuple, and the drift is exactly
+// what this suite exists to notice.
+const CANONICAL = JSON.parse(
+  readFileSync(resolve(import.meta.dirname, '..', 'data', 'peer-range.json'), 'utf8'),
+).canonicalRange
 
 describe('parseVersion / compareVersions', () => {
   it('parses release and prerelease versions', () => {
@@ -60,8 +67,13 @@ describe('satisfiesRange', () => {
     expect(satisfiesRange('0.1.6-alpha.2', CANONICAL)).toBe(true)
   })
 
+  it('admits the 0.1.7 tuple through its own -0 clause (the current host line)', () => {
+    expect(satisfiesRange('0.1.7-alpha.2', CANONICAL)).toBe(true)
+    expect(satisfiesRange('0.1.7-rc.1', CANONICAL)).toBe(true)
+  })
+
   it('does NOT admit a future prerelease tuple (the reason the tripwire exists)', () => {
-    expect(satisfiesRange('0.1.7-rc.1', CANONICAL)).toBe(false)
+    expect(satisfiesRange('0.1.8-rc.1', CANONICAL)).toBe(false)
   })
 
   it('rejects unparseable input instead of throwing', () => {
@@ -77,6 +89,6 @@ describe('suggestedClause', () => {
     const fixed = `${CANONICAL} || ${suggestedClause('0.1.6-rc.1', CANONICAL)}`
     expect(satisfiesRange('0.1.6-rc.1', fixed)).toBe(true)
     expect(satisfiesRange('0.1.6-alpha.0', fixed)).toBe(true)
-    expect(satisfiesRange('0.1.7-rc.1', fixed)).toBe(false)
+    expect(satisfiesRange('0.1.8-rc.1', fixed)).toBe(false)
   })
 })

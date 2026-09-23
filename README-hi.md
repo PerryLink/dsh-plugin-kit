@@ -28,7 +28,8 @@ PerryLink DSH प्लगइन रिपॉज़िटरीज़ के ल
   `@deepseek-ai/dsh-*` पैकेज PerryLink प्लगइन रिपोज़ की साझा `>=0.1.2-rc.1 <0.2.0` बैंड में
   **वैकल्पिक** peer dependencies हैं; वे केवल टाइप इंटरऑप के लिए हैं।
   2026-09-11 को `dsh-v0.1.7-alpha.1` master checkout के विरुद्ध सत्यापित
-  (पूर्ण गेट शृंखला + profile इंस्टॉल स्मोक)।
+  (पूर्ण गेट शृंखला + profile इंस्टॉल स्मोक), और 2026-09-23 को `dsh-v0.1.7-alpha.2`
+  checkout के विरुद्ध पुनः सत्यापित।
 - **Node**: `^22.19.0 || >=24.0.0`, केवल ESM।
 - **वायर अनुकूलता**: नाम और आकृतियाँ `dsh-mask` (sanitize), `dsh-budget`
   (pricing) और `dsh-auto-review` (judge व `fallbackPolicy` शब्दावली) का दर्पण

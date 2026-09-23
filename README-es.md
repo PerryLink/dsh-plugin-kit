@@ -31,7 +31,8 @@ ESM + TypeScript.
   **opcionales** en la banda `>=0.1.2-rc.1 <0.2.0` compartida por los repos de plugins de PerryLink
   repos; solo existen para interoperar tipos. Verificado el 2026-09-11 contra
   el checkout master `dsh-v0.1.7-alpha.1` (cadena completa de puertas + smoke
-  de instalación de perfil).
+  de instalación de perfil), y re-verificado el 2026-09-23 contra el checkout
+  `dsh-v0.1.7-alpha.2`.
 - **Node**: `^22.19.0 || >=24.0.0`, solo ESM.
 - **Compatibilidad de formato**: nombres y formas reflejan `dsh-mask`
   (sanitize), `dsh-budget` (pricing) y `dsh-auto-review` (judge y el
