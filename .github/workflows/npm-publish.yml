@@ -1,8 +1,9 @@
 name: npm-publish
 
 # Reusable publish workflow for the @perrylink dsh plugin ecosystem.
-# Called from each plugin repo on tag push; no local npm token needed —
-# only an NPM_TOKEN repository/org secret is required.
+# Called from each plugin repo on tag push; no npm token is needed at all —
+# the publish authenticates through npm trusted publishing (GitHub Actions
+# OIDC), so the caller only has to grant `id-token: write`.
 #
 # Caller example (in the plugin repo's .github/workflows/release.yml):
 #
@@ -12,11 +13,12 @@ name: npm-publish
 #       tags: ['v*']
 #   jobs:
 #     publish:
+#       permissions:
+#         contents: read
+#         id-token: write
 #       uses: PerryLink/dsh-plugin-kit/.github/workflows/npm-publish.yml@master
 #       with:
 #         package-dir: .
-#       secrets:
-#         npm_token: ${{ secrets.NPM_TOKEN }}
 
 on:
   workflow_call:
@@ -41,10 +43,6 @@ on:
         type: string
         default: ''
         required: false
-    secrets:
-      npm_token:
-        description: 'npm registry automation token'
-        required: true
 
 jobs:
   publish:
@@ -57,7 +55,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          registry-url: 'https://registry.npmjs.org'
+          # No `registry-url` on purpose: it writes
+          # `//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}` into a local
+          # .npmrc, and with the secret retired that line is an EMPTY bearer token -
+          # the registry then answers 404 on PUT instead of letting npm perform the
+          # OIDC trusted-publishing exchange.
           cache: 'pnpm'
       - name: Install
         run: pnpm install --frozen-lockfile
@@ -68,9 +70,22 @@ jobs:
       - name: Build
         run: pnpm run ${{ inputs.build-script }}
         working-directory: ${{ inputs.package-dir }}
+      # Trusted publishing: the OIDC token replaces the long-lived NPM_TOKEN, so
+      # this job reads no secret. npm is upgraded first because the runner ships
+      # npm 10.x and the OIDC exchange needs >= 11.5.1.
+      - name: Upgrade npm and show what the publish will authenticate with
+        run: |
+          npm install -g npm@^11.5.1
+          echo "npm: $(npm --version)"
+          echo "registry: $(npm config get registry)"
+          if [ -f .npmrc ]; then echo "--- workspace .npmrc ---"; cat .npmrc; else echo "no workspace .npmrc"; fi
+          if [ -n "${ACTIONS_ID_TOKEN_REQUEST_TOKEN:-}" ]; then echo "OIDC request TOKEN: present"; else echo "OIDC request TOKEN: MISSING"; fi
+        working-directory: ${{ inputs.package-dir }}
       - name: Publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
+          # npm's OIDC exchange never throws: a failure is only visible at verbose
+          # level, otherwise the step just fails with ENEEDAUTH and no reason.
+          NPM_CONFIG_LOGLEVEL: verbose
         run: |
           if [ -n "${{ inputs.preid }}" ]; then
             npm publish --access public --tag "${{ inputs.preid }}" --provenance

@@ -10,11 +10,15 @@ permissions:
 
 jobs:
   publish:
+    # Trusted publishing: the reusable workflow authenticates to the registry
+    # through the OIDC token, so no npm secret is passed (the retired NPM_TOKEN
+    # was preferred over the OIDC exchange and made the registry answer 404).
+    permissions:
+      contents: read
+      id-token: write
     uses: PerryLink/dsh-plugin-kit/.github/workflows/npm-publish.yml@master
     with:
       package-dir: .
-    secrets:
-      npm_token: ${{ secrets.NPM_TOKEN }}
 
   # The reusable npm-publish workflow ends at the registry; without this job a
   # tag produced a published package and no GitHub Release page (v0.1.8 had to
