@@ -21,6 +21,38 @@ name: npm-publish
 #         package-dir: .
 
 on:
+  # `workflow_dispatch` is not a convenience here — it is what makes a trusted
+  # publish possible at all in this repo's current configuration. npm binds a
+  # trusted publisher to the workflow FILE that performs the OIDC exchange, and
+  # when this workflow is only reachable through a caller the request is
+  # attributed to the CALLER (`release.yml`), so a binding naming
+  # `npm-publish.yml` never matches:
+  #   POST 404 .../oidc/token/exchange/package/@perrylink%2fdsh-plugin-kit
+  #   OIDC token exchange error - package not found
+  # Dispatched directly, this file IS the requesting workflow, so the binding
+  # naming `npm-publish.yml` matches. Inputs mirror the workflow_call form.
+  workflow_dispatch:
+    inputs:
+      package-dir:
+        description: 'Directory containing the package.json to publish'
+        type: string
+        default: '.'
+        required: false
+      build-script:
+        description: 'npm/pnpm script that builds the package before publish'
+        type: string
+        default: 'build'
+        required: false
+      test-script:
+        description: 'npm/pnpm script that tests the package before publish'
+        type: string
+        default: 'test'
+        required: false
+      preid:
+        description: 'Prerelease id for npm publish --tag (empty = latest)'
+        type: string
+        default: ''
+        required: false
   workflow_call:
     inputs:
       package-dir:
