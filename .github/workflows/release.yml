@@ -15,15 +15,58 @@ permissions:
 
 jobs:
   publish:
-    # Trusted publishing: the reusable workflow authenticates to the registry
-    # through the OIDC token, so no npm secret is passed (the retired NPM_TOKEN
-    # was preferred over the OIDC exchange and made the registry answer 404).
+    # The publish is INLINED rather than delegated to the reusable
+    # `npm-publish.yml`, and that is the whole point of this job's shape: npm
+    # binds a trusted publisher to the workflow FILE that performs the OIDC
+    # exchange, and a reusable workflow does not satisfy that binding — calling
+    # it produced `POST 404 .../oidc/token/exchange/package/@perrylink%2fdsh-plugin-kit`
+    # → `OIDC token exchange error - package not found` even with the package's
+    # trusted publisher configured for `npm-publish.yml`. With the steps inlined,
+    # the requesting workflow is this file, so the binding names `release.yml`.
+    # `npm-publish.yml` is kept for other callers; nothing else calls it today.
+    #
+    # Trusted publishing: authentication is the OIDC token, so no npm secret is
+    # passed (the retired NPM_TOKEN was preferred over the OIDC exchange and made
+    # the registry answer 404).
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       id-token: write
-    uses: PerryLink/dsh-plugin-kit/.github/workflows/npm-publish.yml@master
-    with:
-      package-dir: .
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.7.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          # No `registry-url` on purpose: it writes
+          # `//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}` into a local
+          # .npmrc, and with the secret retired that line is an EMPTY bearer
+          # token — the registry then answers 404 on PUT instead of letting npm
+          # perform the OIDC trusted-publishing exchange.
+          cache: 'pnpm'
+      - name: Install
+        run: pnpm install --frozen-lockfile
+      - name: Test
+        run: pnpm run test
+      - name: Build
+        run: pnpm run build
+      # npm is upgraded first because the runner ships npm 10.x and the OIDC
+      # exchange needs >= 11.5.1.
+      - name: Upgrade npm and show what the publish will authenticate with
+        run: |
+          npm install -g npm@^11.5.1
+          echo "npm: $(npm --version)"
+          echo "registry: $(npm config get registry)"
+          if [ -f .npmrc ]; then echo "--- workspace .npmrc ---"; cat .npmrc; else echo "no workspace .npmrc"; fi
+          if [ -n "${ACTIONS_ID_TOKEN_REQUEST_TOKEN:-}" ]; then echo "OIDC request TOKEN: present"; else echo "OIDC request TOKEN: MISSING"; fi
+      - name: Publish
+        env:
+          # npm's OIDC exchange never throws: a failure is only visible at verbose
+          # level, otherwise the step just fails with ENEEDAUTH and no reason.
+          NPM_CONFIG_LOGLEVEL: verbose
+        run: npm publish --access public --provenance
 
   # The reusable npm-publish workflow ends at the registry; without this job a
   # tag produced a published package and no GitHub Release page (v0.1.8 had to
