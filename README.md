@@ -31,7 +31,7 @@ ESM + TypeScript package.
   band the PerryLink plugin repos share; they exist only for type
   interop. Verified 2026-09-11 against the dsh-v0.1.7-alpha.1 master checkout
   (full gate chain + profile install smoke), and re-verified 2026-09-24 against
-  the dsh-v0.1.7-rc.1 checkout.
+  the dsh-v0.1.7-rc.2 checkout.
 - **Node**: `^22.19.0 || >=24.0.0`, ESM only.
 - **Wire compatibility**: names and shapes mirror `dsh-mask` (sanitize),
   `dsh-budget` (pricing), and `dsh-auto-review` (judge and the

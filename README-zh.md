@@ -24,7 +24,7 @@
 - **DSH harness**：本包运行时零 `@deepseek-ai/*` import。`@deepseek-ai/cordis`
   （`^4.0.4`）、`@deepseek-ai/schemastery`（`^3.18.4`）与各 `@deepseek-ai/dsh-*`
   包均声明为**可选** peer 依赖，区间与 PerryLink 各插件仓一致（`>=0.1.2-rc.1 <0.2.0 || >=0.1.5-alpha.1 <0.2.0 || >=0.1.6-0 <0.2.0 || >=0.1.7-0 <0.2.0`），仅用于
-  类型互通。已于 2026-09-11 针对 `dsh-v0.1.7-alpha.1` master checkout 核验（全量门禁链 + profile 安装冒烟测试），并已于 2026-09-24 针对 `dsh-v0.1.7-rc.1` checkout 复核。
+  类型互通。已于 2026-09-11 针对 `dsh-v0.1.7-alpha.1` master checkout 核验（全量门禁链 + profile 安装冒烟测试），并已于 2026-09-24 针对 `dsh-v0.1.7-rc.2` checkout 复核。
 - **Node**：`^22.19.0 || >=24.0.0`，仅 ESM。
 - **线级兼容**：函数名与形状对齐 `dsh-mask`（sanitize）、`dsh-budget`（pricing）、
   `dsh-auto-review`（judge 与 `fallbackPolicy` 词汇），迁移是机械替换。
