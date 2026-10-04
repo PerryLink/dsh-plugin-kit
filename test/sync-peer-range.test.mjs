@@ -171,15 +171,18 @@ describe('CLI end-to-end', () => {
     const script = resolve(import.meta.dirname, '..', 'scripts', 'sync-peer-range.mjs')
     const report = execFileSync(process.execPath, [script, '--dir', dir], { encoding: 'utf8' })
     expect(report).toContain('cli-repo\tdrift')
-    expect(report).toContain('@deepseek-ai/dsh-session: drift-low')
+    // both keys lack the 0.2 clauses the canonical range carries, so the upper
+    // bound differs and the status is drift-upper rather than drift-low
+    expect(report).toContain('@deepseek-ai/dsh-session: drift-upper')
+    expect(report).toContain('@deepseek-ai/dsh-projection: drift-upper')
     const rewrite = execFileSync(process.execPath, [script, '--dir', dir, '--write'], { encoding: 'utf8' })
     expect(rewrite).toContain('rewritten (2 keys)')
     const after = await readFile(pkg, 'utf8')
     expect(after).toContain(`"@deepseek-ai/dsh-session": "${canonical}"`)
-    // the higher 0.1.5 floor survives the rewrite and the missing clauses are added
-    expect(after).toContain(
-      `"@deepseek-ai/dsh-projection": ">=0.1.2-rc.1 <0.2.0 || >=0.1.5-rc.1 <0.2.0 || >=0.1.6-0 <0.2.0 || >=0.1.7-0 <0.2.0"`,
-    )
+    // the higher 0.1.5 floor survives the rewrite, the missing 0.1.6/0.1.7/0.2
+    // clauses are added, and the 0.2 clauses keep the canonical upper bound
+    const projection = canonical.replace('>=0.1.5-alpha.1 <0.2.0', '>=0.1.5-rc.1 <0.2.0')
+    expect(after).toContain(`"@deepseek-ai/dsh-projection": "${projection}"`)
     const second = execFileSync(process.execPath, [script, '--dir', dir], { encoding: 'utf8' })
     expect(second).toContain('cli-repo\tok (1 higher-floor)')
   })
