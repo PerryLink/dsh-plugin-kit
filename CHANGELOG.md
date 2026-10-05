@@ -12,11 +12,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Correct the release date in the previous section, which was stamped with the literal string `undefined` by the release stamper. No content or behaviour change; the version is bumped only because npm will not republish an existing version.
 
 
+## [0.1.16] - 2026-10-05
+
+### Fixed
+
+- **`verify-seam` no longer fails a plugin that carries no capability seam.** The gate reported
+  a false positive whenever none of the three role markers was present, which is the normal
+  shape of a pure detector or a read-only tool: it registers nothing for anyone else to
+  consume, so there is no incomplete trio to report. `dsh-plugin-doctor` — a flat `.mjs` +
+  `lib/` repo with no `src/` — failed `node lib/verify/cli.js all .` for exactly this reason,
+  and so did the doctor own self-check, which cannot be red on its own criteria.
+  The gate now measures the condition instead of assuming it: it fires only once at least one
+  role marker is present, and reports the out-of-scope case as a warning so the outcome stays
+  visible rather than indistinguishable from a fully conforming trio. The failure mode the gate
+  exists to catch — a half-declared seam — still fails, with both the two-of-three case and the
+  root-level pure-JS fallback pinned by tests.
+
+### Notes
+
+- No behaviour change for any repository that carries a seam: the three-role assertion is
+  byte-identical to before. Only the no-seam case changed, from FAIL to PASS + WARN.
+
 ## [Unreleased]
 
 ## [0.1.14] - 2026-10-04
-
-undefined
 
 ## [0.1.13] - 2026-10-04
 

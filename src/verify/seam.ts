@@ -4,6 +4,15 @@
  * source for a marker of each role and fails when any role is absent, so an
  * incomplete seam is caught mechanically instead of in review.
  *
+ * **Scope: a plugin that carries a seam must carry all three roles. A plugin that
+ * carries none is out of scope, not incomplete.** The distinction is measured, not
+ * assumed: the gate fires only once at least one role marker is present. That
+ * matters because a large part of the family has no capability seam at all — a
+ * pure detector or a read-only tool registers nothing for anyone else to consume
+ * (`dsh-plugin-doctor` is the canonical case), and failing it for not having a
+ * seam would report a structural exception as a defect. The failure mode this gate
+ * exists to catch, a half-declared seam, still fails exactly as before.
+ *
  * Markers are substring probes into source text; the shipped template
  * (`template/src/index.ts`) carries the exact markers this gate looks for.
  *
@@ -42,7 +51,7 @@ const DEFAULT_MARKERS: SeamMarkers = {
 }
 
 /**
- * Check that a repo's source carries all three seam roles.
+ * Check that a repo's source carries all three seam roles, when it carries a seam at all.
  * @param dir - repo root.
  * @param options - markers and source directory.
  * @returns the gate report.
@@ -51,6 +60,7 @@ export function verifySeam(dir: string, options: VerifySeamOptions = {}): Verify
   const markers = options.markers ?? DEFAULT_MARKERS
   const sourceDir = options.sourceDir ?? 'src'
   const errors: VerifyIssue[] = []
+  const warnings: VerifyIssue[] = []
 
   const srcFiles = listFiles(dir, SOURCE_EXTS).filter(path => path.startsWith(`${sourceDir}/`) || path.startsWith(`${sourceDir}\\`))
   // 纯 JS 仓（无 src/ 目录，入口在仓库根，如 index.mjs）：回退扫描根层源文件
@@ -62,11 +72,26 @@ export function verifySeam(dir: string, options: VerifySeamOptions = {}): Verify
   }
 
   const corpus = files.map(file => readText(join(dir, file)) ?? '').join('\n')
+
+  // Out of scope: no role marker anywhere means this plugin carries no capability seam,
+  // so there is no incomplete trio to report. Passing is not leniency — it is the correct
+  // reading of "an incomplete seam is caught", and the warning keeps the outcome visible
+  // instead of indistinguishable from a fully conforming trio.
+  const present = Object.entries(markers).filter(([, marker]) => corpus.includes(marker))
+  if (present.length === 0) {
+    warnings.push({
+      path: sourceDir,
+      message: `no seam role marker present (none of ${Object.values(markers).map(m => JSON.stringify(m)).join(', ')}); `
+        + 'this plugin carries no capability seam, so the three-role rule does not apply',
+    })
+    return report(errors, warnings)
+  }
+
   for (const [role, marker] of Object.entries(markers)) {
     if (!corpus.includes(marker)) {
       errors.push({ path: sourceDir, message: `seam role "${role}" marker ${JSON.stringify(marker)} not found in source` })
     }
   }
 
-  return report(errors)
+  return report(errors, warnings)
 }
