@@ -21,6 +21,12 @@ PerryLink DSH प्लगइन रिपॉज़िटरीज़ के ल
 सत्र-घटना गेट, यांत्रिक verify स्क्रिप्ट और साझा sanitize/pricing/judge शुद्ध
 मॉड्यूल — एक ESM + TypeScript पैकेज में निकालता है।
 
+## What is dsh-plugin-kit?
+
+PerryLink DSH प्लगइन रिपॉज़िटरीज़ के लिए साझा **शून्य-रनटाइम-निर्भरता** टूलकिट। प्रति-प्रोजेक्ट ऑडिट में पाया गया कि 33 में से 20+ प्लगइन एक ही Provider seam हाथ से लिखते हैं और एक जैसी sanitize/pricing/निर्णय आकृतियाँ दोहराते हैं, इसलिए यह पैकेज वह सब — प्लगेबल Provider seam, fail-closed अनुमोदन और अनुकूली सत्र-घटना गेट, यांत्रिक verify स्क्रिप्ट और साझा sanitize/pricing/judge शुद्ध मॉड्यूल — एक ESM + TypeScript पैकेज में निकालता है।
+
+![dsh-plugin-kit का टर्मिनल डेमो: dsh-plugin-kit — the Provider seam, plus the three verify gates](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/master/docs/assets/dsh-plugin-kit-demo.png)
+
 ## अनुकूलता (Compatibility)
 
 - **DSH harness**: किट रनटाइम पर `@deepseek-ai/*` से कुछ भी import नहीं करता।
@@ -49,6 +55,10 @@ PerryLink DSH प्लगइन रिपॉज़िटरीज़ के ल
   Renovate प्रीसेट।
 
 ## त्वरित शुरुआत (Quick start)
+
+```sh
+dsh plugin --profile web add github:PerryLink/dsh-plugin-kit
+```
 
 npm से:
 
@@ -83,7 +93,7 @@ const active = registry.use('ner') ?? registry.use()
 dsh plugin --profile web add @perrylink/dsh-plugin-kit
 
 # git चैनल (नवीनतम master)
-dsh plugin --profile web add "github:PerryLink/dsh-plugin-kit#master"
+dsh plugin --profile web add github:PerryLink/dsh-plugin-kit
 ```
 
 हटाने के लिए:

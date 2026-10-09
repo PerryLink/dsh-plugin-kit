@@ -22,6 +22,12 @@ fail-closed approval and adaptive session-event gates, the mechanical verify
 scripts, and the shared sanitize/pricing/judge pure modules — into one
 ESM + TypeScript package.
 
+## What is dsh-plugin-kit?
+
+Shared **zero-runtime-dependency** toolkit for the PerryLink DSH plugin repositories. The per-project audit found 20+ of the 33 plugins hand-rolling the same Provider seam and duplicating the same sanitize/pricing/verdict shapes, so this package extracts all of it — the pluggable Provider seam, the fail-closed approval and adaptive session-event gates, the mechanical verify scripts, and the shared sanitize/pricing/judge pure modules — into one ESM + TypeScript package.
+
+![Terminal demo of dsh-plugin-kit: dsh-plugin-kit — the Provider seam, plus the three verify gates](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/master/docs/assets/dsh-plugin-kit-demo.png)
+
 ## Compatibility
 
 - **DSH harness**: the kit imports nothing from `@deepseek-ai/*` at runtime.
@@ -51,6 +57,10 @@ ESM + TypeScript package.
   shared Renovate preset.
 
 ## Quick start
+
+```sh
+dsh plugin --profile web add github:PerryLink/dsh-plugin-kit
+```
 
 From npm:
 
@@ -89,7 +99,7 @@ package:
 dsh plugin --profile web add @perrylink/dsh-plugin-kit
 
 # git channel (latest master)
-dsh plugin --profile web add "github:PerryLink/dsh-plugin-kit#master"
+dsh plugin --profile web add github:PerryLink/dsh-plugin-kit
 ```
 
 Remove with:

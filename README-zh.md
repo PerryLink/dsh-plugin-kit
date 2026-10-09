@@ -19,6 +19,12 @@
 这一切——可插拔 Provider seam、fail-closed 审批门与自适应会话事件门、机械校验脚本、共享
 的 sanitize/pricing/judge 纯函数模块——抽取进一个 ESM + TypeScript 包。
 
+## What is dsh-plugin-kit?
+
+面向 PerryLink DSH 插件仓库的共享**零运行时依赖**工具包。逐项审计发现 33 个插件中有 20+ 各自手写同样的 Provider seam、并重复相同的 sanitize/pricing/裁决形状，因此本包把 这一切——可插拔 Provider seam、fail-closed 审批门与自适应会话事件门、机械校验脚本、共享 的 sanitize/pricing/judge 纯函数模块——抽取进一个 ESM + TypeScript 包。
+
+![dsh-plugin-kit 终端演示：dsh-plugin-kit — the Provider seam, plus the three verify gates](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/master/docs/assets/dsh-plugin-kit-demo.png)
+
 ## 兼容性
 
 - **DSH harness**：本包运行时零 `@deepseek-ai/*` import。`@deepseek-ai/cordis`
@@ -40,6 +46,10 @@
   Definition / Provider / Consumer）、最小测试与共享 Renovate 预设。
 
 ## 快速开始
+
+```sh
+dsh plugin --profile web add github:PerryLink/dsh-plugin-kit
+```
 
 npm 通道：
 
@@ -74,7 +84,7 @@ const active = registry.use('ner') ?? registry.use()
 dsh plugin --profile web add @perrylink/dsh-plugin-kit
 
 # git 渠道（最新 master）
-dsh plugin --profile web add "github:PerryLink/dsh-plugin-kit#master"
+dsh plugin --profile web add github:PerryLink/dsh-plugin-kit
 ```
 
 移除：
