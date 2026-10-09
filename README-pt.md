@@ -10,7 +10,7 @@ Kit compartilhado **sem dependências em tempo de execução** para os repositó
 [![DSH Market](https://raw.githubusercontent.com/2BingLing/dsh-market/master/assets/readme/badge-listed-en.svg)](https://dsh.market/)
 [![Node](https://img.shields.io/badge/node-%5E22.19%20%7C%7C%20%3E%3D24-brightgreen.svg)](#)
 [![Gitee](https://img.shields.io/badge/Gitee-mirror-c71d23?logo=gitee)](https://gitee.com/perrylink/dsh-plugin-kit)
-[![CI](https://img.shields.io/github/actions/workflow/status/PerryLink/dsh-plugin-kit/ci.yml?branch=master&label=CI)](https://github.com/PerryLink/dsh-plugin-kit/actions)
+[![CI](https://img.shields.io/github/actions/workflow/status/PerryLink/dsh-plugin-kit/ci.yml?branch=main&label=CI)](https://github.com/PerryLink/dsh-plugin-kit/actions)
 [![Version](https://img.shields.io/github/v/tag/PerryLink/dsh-plugin-kit?label=version)](https://github.com/PerryLink/dsh-plugin-kit/releases)
 [![npm downloads](https://img.shields.io/npm/dm/@perrylink/dsh-plugin-kit)](https://www.npmjs.com/package/@perrylink/dsh-plugin-kit)
 [![dshfind](https://dshfind.com/api/badge/PerryLink/dsh-plugin-kit?metric=downloads&lang=pt)](https://dshfind.com/pt/plugins/PerryLink/dsh-plugin-kit?ref=badge)
@@ -30,7 +30,7 @@ ESM + TypeScript.
 
 Kit compartilhado **sem dependências em tempo de execução** para os repositórios de plugins DSH da PerryLink. A auditoria por projeto encontrou mais de 20 dos 33 plugins reimplementando o mesmo seam Provider e duplicando as mesmas formas de sanitização, precificação e veredicto, então este pacote extrai tudo isso — o seam Provider plugável, as portas de aprovação fail-closed e de eventos de sessão adaptativos, os scripts de verificação mecânica e os módulos puros sanitize/pricing/judge — em um único pacote ESM + TypeScript.
 
-![Demonstração de terminal do dsh-plugin-kit: dsh-plugin-kit — the Provider seam, plus the three verify gates](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/master/docs/assets/dsh-plugin-kit-demo.png)
+![Demonstração de terminal do dsh-plugin-kit: dsh-plugin-kit — the Provider seam, plus the three verify gates](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/main/docs/assets/dsh-plugin-kit-demo.png)
 
 ## Compatibilidade
 

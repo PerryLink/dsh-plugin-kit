@@ -53,7 +53,7 @@ on:
     tags: ['v*']
 jobs:
   publish:
-    uses: PerryLink/dsh-plugin-kit/.github/workflows/npm-publish.yml@master
+    uses: PerryLink/dsh-plugin-kit/.github/workflows/npm-publish.yml@main
     with:
       package-dir: .
     secrets:
