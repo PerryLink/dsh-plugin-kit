@@ -1,4 +1,7 @@
 # @perrylink/dsh-plugin-kit
+
+面向 PerryLink DSH 插件仓库的共享**零运行时依赖**工具包。逐项审计发现 33 个插件中有 20+ 各自手写同样的 Provider seam、并重复相同的 sanitize/pricing/裁决形状，因此本包把 这一切——可插拔 Provider seam、fail-closed 审批门与自适应会话事件门、机械校验脚本、共享 的 sanitize/pricing/judge 纯函数模块——抽取进一个 ESM + TypeScript 包。
+
 - **1024 商店渠道**：先 `npm i -g dsh1024`，再 `dsh1024 plugin --profile web add @perrylink/dsh-plugin-kit`（计入 [deepseek1024.com](https://deepseek1024.com) 安装排行）。
 
 [![npm version](https://img.shields.io/npm/v/@perrylink/dsh-plugin-kit)](https://www.npmjs.com/package/@perrylink/dsh-plugin-kit)

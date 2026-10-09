@@ -1,4 +1,7 @@
 # @perrylink/dsh-plugin-kit
+
+Kit compartido **sin dependencias en tiempo de ejecución** para los repositorios de plugins DSH de PerryLink. La auditoría por proyecto detectó que más de 20 de los 33 plugins reimplementan el mismo seam Provider y duplican las mismas formas de sanitización, precios y veredictos, así que este paquete lo extrae todo — el seam Provider enchufable, las puertas de aprobación fail-closed y de eventos de sesión adaptativos, los scripts de verificación mecánica y los módulos puros sanitize/pricing/judge — en un único paquete ESM + TypeScript.
+
 - **Canal de la tienda 1024**: primero `npm i -g dsh1024`, luego `dsh1024 plugin --profile web add @perrylink/dsh-plugin-kit` (cuenta para el ranking de instalaciones de [deepseek1024.com](https://deepseek1024.com)).
 
 [![npm version](https://img.shields.io/npm/v/@perrylink/dsh-plugin-kit)](https://www.npmjs.com/package/@perrylink/dsh-plugin-kit)
