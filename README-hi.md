@@ -30,6 +30,10 @@ PerryLink DSH प्लगइन रिपॉज़िटरीज़ के ल
 
 ![dsh-plugin-kit का टर्मिनल डेमो: dsh-plugin-kit — the Provider seam, plus the three verify gates](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/main/docs/assets/dsh-plugin-kit-demo.png)
 
+![Animated terminal demo of dsh-plugin-kit](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/main/docs/assets/dsh-plugin-kit-demo.gif)
+
+*वही रन, एनिमेटेड।*
+
 ## अनुकूलता (Compatibility)
 
 - **DSH harness**: किट रनटाइम पर `@deepseek-ai/*` से कुछ भी import नहीं करता।

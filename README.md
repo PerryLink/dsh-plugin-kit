@@ -31,6 +31,10 @@ Shared **zero-runtime-dependency** toolkit for the PerryLink DSH plugin reposito
 
 ![Terminal demo of dsh-plugin-kit: dsh-plugin-kit — the Provider seam, plus the three verify gates](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/main/docs/assets/dsh-plugin-kit-demo.png)
 
+![Animated terminal demo of dsh-plugin-kit](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/main/docs/assets/dsh-plugin-kit-demo.gif)
+
+*The same run, animated.*
+
 ## Compatibility
 
 - **DSH harness**: the kit imports nothing from `@deepseek-ai/*` at runtime.

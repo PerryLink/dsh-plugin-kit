@@ -32,6 +32,10 @@ Kit compartido **sin dependencias en tiempo de ejecución** para los repositorio
 
 ![Demostración de terminal de dsh-plugin-kit: dsh-plugin-kit — the Provider seam, plus the three verify gates](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/main/docs/assets/dsh-plugin-kit-demo.png)
 
+![Animated terminal demo of dsh-plugin-kit](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/main/docs/assets/dsh-plugin-kit-demo.gif)
+
+*La misma ejecución, animada.*
+
 ## Compatibilidad
 
 - **DSH harness**: el kit no importa nada de `@deepseek-ai/*` en tiempo de

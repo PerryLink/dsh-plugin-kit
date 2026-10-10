@@ -28,6 +28,10 @@
 
 ![dsh-plugin-kit 终端演示：dsh-plugin-kit — the Provider seam, plus the three verify gates](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/main/docs/assets/dsh-plugin-kit-demo.png)
 
+![Animated terminal demo of dsh-plugin-kit](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/main/docs/assets/dsh-plugin-kit-demo.gif)
+
+*同一次运行，动图版。*
+
 ## 兼容性
 
 - **DSH harness**：本包运行时零 `@deepseek-ai/*` import。`@deepseek-ai/cordis`
