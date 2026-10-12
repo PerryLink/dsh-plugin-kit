@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-10-07",
-  "note": "Registry of the @perrylink dsh plugin ecosystem (41 plugin repos + this kit). Star counts re-read on 2026-10-07. `status` is the maintenance state: active, frozen (no new features, breakage fixes only) or retired (npm-deprecated, not installable from dsh-kit). Consumed by the portal, sync scripts, and score pipelines.",
+  "updatedAt": "2026-10-12",
+  "note": "Registry of the @perrylink dsh plugin ecosystem (41 plugin repos + this kit). Star counts re-read on 2026-10-07; `status` refreshed on 2026-10-12 (dsh-memento unfrozen, so it is active again). `status` is the maintenance state: active, frozen (no new features, breakage fixes only) or retired (npm-deprecated, not installable from dsh-kit). Consumed by the portal, sync scripts, and score pipelines.",
   "repos": [
     {
       "name": "dsh-plugin-kit",
@@ -16,7 +16,7 @@
       "group": "会话",
       "role": "plugin",
       "star": 139,
-      "status": "frozen"
+      "status": "active"
     },
     {
       "name": "dsh-checkpoint-rewind",
