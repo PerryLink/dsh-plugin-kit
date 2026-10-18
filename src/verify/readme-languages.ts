@@ -5,7 +5,7 @@
  * markdown file matching its `{README,README.*}` glob, and `README.<lang>.md`
  * sorts ahead of `README.md` there, so the dotted form silently made every
  * published package of this family show a translation. This is
- * the single-language-check core the 33 repos' five-language `verify-readmes`
+ * the single-language-check core the ecosystem's five-language `verify-readmes`
  * scripts reduce to; configure `languages` to match a repo's translation set.
  *
  * @module dsh-plugin-kit/verify/readme-languages

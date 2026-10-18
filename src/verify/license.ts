@@ -1,7 +1,7 @@
 /**
  * Mechanical license gate: a plugin repo must ship a non-empty license file
  * and its `package.json` `license` field must be a known SPDX identifier
- * (default `Apache-2.0`, matching the 33-repo convention). Other repos reuse
+ * (default `Apache-2.0`, the ecosystem convention). Other repos reuse
  * this by calling `verifyLicense(process.cwd())` from their CI.
  *
  * @module dsh-plugin-kit/verify/license

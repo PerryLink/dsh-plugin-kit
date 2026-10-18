@@ -1,11 +1,16 @@
-# Ecosystem Tooling (34-repo maintenance)
+# Ecosystem Tooling (active-repo maintenance)
 
-`dsh-plugin-kit` doubles as the maintenance hub for the 33 @perrylink dsh
-plugin repos. Everything here is deterministic and runs offline.
+`dsh-plugin-kit` doubles as the maintenance hub for the @perrylink dsh plugin
+repos. Everything here is deterministic and runs offline. The registry
+`data/repos.json` is the count of record (95 entries on 2026-10-13: 87 active,
+5 frozen, 3 retired — 42 of them in this workspace, 53 compliance checkers in
+`D:\Projects\dsh-plugins`); prose must not restate it, the numbers drifted every
+time the ecosystem grew.
 
 ## 1. Peer-range sync — `scripts/sync-peer-range.mjs`
 
-The 34 repos lock `@deepseek-ai/dsh-*` peerDependencies to one band. When the
+Every repo in the target directory locks `@deepseek-ai/dsh-*` peerDependencies
+to one band. When the
 harness ships a breaking minor (0.2.0), every repo must re-pin together:
 
 ```sh
@@ -65,7 +70,7 @@ builds, and publishes with `--provenance`.
 
 ## 4. Repo manifest — `data/repos.json`
 
-The single registry of the 34 repos (name, GitHub URL, group, role, star
-count). Consumed by `dsh-plugin-portal`, sync scripts, and score pipelines.
+The single registry of the ecosystem (name, GitHub URL, group, role, status,
+star count). Consumed by `dsh-plugin-portal`, sync scripts, and score pipelines.
 Update star counts periodically and keep it the source of truth for the
 ecosystem inventory.

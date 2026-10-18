@@ -132,7 +132,7 @@ export class ProviderRegistry<T> {
 /**
  * Create a registry with an injected default implementation (convenience for
  * the common "default zero-dependency provider + optional heavy backends"
- * pattern the 33 repos share).
+ * pattern the ecosystem's plugins share).
  *
  * @param defaultName - name for the default provider.
  * @param defaultImpl - default implementation registered under `defaultName`.

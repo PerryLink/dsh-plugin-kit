@@ -6,7 +6,9 @@
  * This is the deterministic half of the ecosystem version-lock strategy:
  * - routine in-range updates flow through the shared Renovate preset
  * - breaking range re-pins (`<0.2.0` -> `>=0.2.0 <0.3.0`) run through this
- *   script in one command, so all 33 repos move together.
+ *   script in one command, so every repo in the target directory moves together
+ *   (the registry `data/repos.json` is the source of truth for how many:
+ *   95 entries as of 2026-10-13, 42 of them in this workspace).
  *
  * Usage:
  *   node scripts/sync-peer-range.mjs --dir <reposDir>            # report only
