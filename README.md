@@ -1,6 +1,8 @@
 # @perrylink/dsh-plugin-kit
 
-Shared **zero-runtime-dependency** toolkit for the PerryLink DSH plugin repositories. The per-project audit found 20+ of the 33 plugins hand-rolling the same Provider seam and duplicating the same sanitize/pricing/verdict shapes, so this package extracts all of it — the pluggable Provider seam, the fail-closed approval and adaptive session-event gates, the mechanical verify scripts, and the shared sanitize/pricing/judge pure modules — into one ESM + TypeScript package.
+Shared **zero-runtime-dependency** toolkit for the PerryLink DSH plugin repositories. The per-project audit found 20+ plugins hand-rolling the same Provider seam and duplicating the same sanitize/pricing/verdict shapes, so this package extracts all of it — the pluggable Provider seam, the fail-closed approval and adaptive session-event gates, the mechanical verify scripts, and the shared sanitize/pricing/judge pure modules — into one ESM + TypeScript package.
+
+> **Package name.** This project publishes to npm as **`@perrylink/dsh-plugin-kit`**. The bare npm name `dsh-plugin-kit` belongs to a different, unrelated project — installing it does not install this package.
 
 - **1024 store channel**: `npm i -g dsh1024` once, then `dsh1024 plugin --profile web add @perrylink/dsh-plugin-kit` (counts toward the [deepseek1024.com](https://deepseek1024.com) install ranking).
 
@@ -18,7 +20,7 @@ Shared **zero-runtime-dependency** toolkit for the PerryLink DSH plugin reposito
 **English** | [简体中文](README-zh.md) | [Español](README-es.md) | [Português](README-pt.md) | [हिन्दी](README-hi.md)
 
 Shared **zero-runtime-dependency** toolkit for the PerryLink DSH plugin
-repositories. The per-project audit found 20+ of the 33 plugins hand-rolling
+repositories. The per-project audit found 20+ plugins hand-rolling
 the same Provider seam and duplicating the same sanitize/pricing/verdict
 shapes, so this package extracts all of it — the pluggable Provider seam, the
 fail-closed approval and adaptive session-event gates, the mechanical verify
@@ -27,9 +29,9 @@ ESM + TypeScript package.
 
 ## What is dsh-plugin-kit?
 
-Shared **zero-runtime-dependency** toolkit for the PerryLink DSH plugin repositories. The per-project audit found 20+ of the 33 plugins hand-rolling the same Provider seam and duplicating the same sanitize/pricing/verdict shapes, so this package extracts all of it — the pluggable Provider seam, the fail-closed approval and adaptive session-event gates, the mechanical verify scripts, and the shared sanitize/pricing/judge pure modules — into one ESM + TypeScript package.
+Shared **zero-runtime-dependency** toolkit for the PerryLink DSH plugin repositories. The per-project audit found 20+ plugins hand-rolling the same Provider seam and duplicating the same sanitize/pricing/verdict shapes, so this package extracts all of it — the pluggable Provider seam, the fail-closed approval and adaptive session-event gates, the mechanical verify scripts, and the shared sanitize/pricing/judge pure modules — into one ESM + TypeScript package.
 
-![Terminal demo of dsh-plugin-kit: dsh-plugin-kit — the Provider seam, plus the three verify gates](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/main/docs/assets/dsh-plugin-kit-demo.png)
+![Terminal demo of dsh-plugin-kit: dsh-plugin-kit — the Provider seam, plus the three verify gates](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/main/docs/assets/dsh-plugin-kit-hero.png)
 
 ![Animated terminal demo of dsh-plugin-kit](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/main/docs/assets/dsh-plugin-kit-demo.gif)
 
@@ -176,12 +178,16 @@ pnpm run verify:artifacts
 
 ## Topics
 
-This repository is also the maintenance hub for the 33 plugin repos:
-`scripts/sync-peer-range.mjs` re-pins the shared peer band across all repos in
+This repository is also the maintenance hub for the ecosystem:
+`scripts/sync-peer-range.mjs` re-pins the shared peer band across every repo in
+the target directory in
 one command, `renovate/default.json5` is the shared Renovate preset every repo
 extends, `.github/workflows/npm-publish.yml` is a reusable tag-triggered
 publish workflow (needs only an `NPM_TOKEN` secret), and `data/repos.json` is
-the ecosystem registry consumed by the portal. See
+the ecosystem registry consumed by the portal — **95 entries as of 2026-10-13**
+(87 active, 5 frozen, 3 retired), of which 42 are in this workspace and 53 are
+the compliance checkers in `D:\Projects\dsh-plugins`. Counts live in that file;
+read it rather than this sentence. See
 [docs/ecosystem-tooling.md](docs/ecosystem-tooling.md).
 
 Keywords: dsh, dsh-plugin, deepseek-harness, deepseek, cordis, perrylink,

@@ -1,9 +1,43 @@
 # Changelog
 
+## [0.1.19] - 2026-10-18
+
+### Changed
+
+- Add a 1280×720 hero and a 960×540, 4-second terminal GIF rendered from the test run; `screenshots.json` is an object array and `capture.json` records the command.
+
+## [0.1.18] - 2026-10-18
+
+### Changed
+
+- Compatibility: declare `engines.dsh` `>=0.2.1-0 <0.3.0`; devDependencies to `0.2.1-rc.2`; add `@deepseek-ai/dsh-working-directory`.
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+### Fixed
+
+- **Stale ecosystem counts in the docs and doc comments.** Six places still said
+  "the 33 repos" / "the 33 plugins" and four said "the 34 repos", a number that
+  had been wrong since the ecosystem grew past it. The counts now come from the
+  registry that actually holds them — `data/repos.json`, 95 entries on
+  2026-10-13 (87 active, 5 frozen, 3 retired; 42 of them in this workspace and
+  53 compliance checkers in `D:\Projects\dsh-plugins`) — and the sentences that
+  do not need a number no longer carry one, so the next growth spurt cannot make
+  them wrong again: `README.md`, `README-zh.md`, `README-es.md`, `README-pt.md`,
+  `README-hi.md`, `docs/ecosystem-tooling.md`, `src/verify/index.ts`,
+  `src/verify/license.ts`, `src/verify/readme-languages.ts`,
+  `src/seam/provider.ts`, `scripts/sync-peer-range.mjs`.
+- `docs/ecosystem-tooling.md`'s title said "34-repo maintenance" while its first
+  paragraph said 33 and its registry section said 34 again; the three numbers
+  described three different scopes. The title no longer carries a count and the
+  registry section names `data/repos.json` as the number of record.
+
+No behaviour change: comments, prose and one script's header comment only.
 
 ## [0.1.17] - 2026-10-10
 

@@ -1,6 +1,8 @@
 # @perrylink/dsh-plugin-kit
 
-Kit compartido **sin dependencias en tiempo de ejecución** para los repositorios de plugins DSH de PerryLink. La auditoría por proyecto detectó que más de 20 de los 33 plugins reimplementan el mismo seam Provider y duplican las mismas formas de sanitización, precios y veredictos, así que este paquete lo extrae todo — el seam Provider enchufable, las puertas de aprobación fail-closed y de eventos de sesión adaptativos, los scripts de verificación mecánica y los módulos puros sanitize/pricing/judge — en un único paquete ESM + TypeScript.
+Kit compartido **sin dependencias en tiempo de ejecución** para los repositorios de plugins DSH de PerryLink. La auditoría por proyecto detectó que más de 20 plugins reimplementan el mismo seam Provider y duplican las mismas formas de sanitización, precios y veredictos, así que este paquete lo extrae todo — el seam Provider enchufable, las puertas de aprobación fail-closed y de eventos de sesión adaptativos, los scripts de verificación mecánica y los módulos puros sanitize/pricing/judge — en un único paquete ESM + TypeScript.
+
+> **Nombre del paquete.** Este proyecto se publica en npm como **`@perrylink/dsh-plugin-kit`**. El nombre simple `dsh-plugin-kit` pertenece a otro proyecto no relacionado: instalarlo no instala este paquete.
 
 - **Canal de la tienda 1024**: primero `npm i -g dsh1024`, luego `dsh1024 plugin --profile web add @perrylink/dsh-plugin-kit` (cuenta para el ranking de instalaciones de [deepseek1024.com](https://deepseek1024.com)).
 
@@ -19,7 +21,7 @@ Kit compartido **sin dependencias en tiempo de ejecución** para los repositorio
 
 Kit compartido **sin dependencias en tiempo de ejecución** para los
 repositorios de plugins DSH de PerryLink. La auditoría por proyecto detectó
-que más de 20 de los 33 plugins reimplementan el mismo seam Provider y
+que más de 20 plugins reimplementan el mismo seam Provider y
 duplican las mismas formas de sanitización, precios y veredictos, así que este
 paquete lo extrae todo — el seam Provider enchufable, las puertas de aprobación
 fail-closed y de eventos de sesión adaptativos, los scripts de verificación
@@ -28,9 +30,9 @@ ESM + TypeScript.
 
 ## What is dsh-plugin-kit?
 
-Kit compartido **sin dependencias en tiempo de ejecución** para los repositorios de plugins DSH de PerryLink. La auditoría por proyecto detectó que más de 20 de los 33 plugins reimplementan el mismo seam Provider y duplican las mismas formas de sanitización, precios y veredictos, así que este paquete lo extrae todo — el seam Provider enchufable, las puertas de aprobación fail-closed y de eventos de sesión adaptativos, los scripts de verificación mecánica y los módulos puros sanitize/pricing/judge — en un único paquete ESM + TypeScript.
+Kit compartido **sin dependencias en tiempo de ejecución** para los repositorios de plugins DSH de PerryLink. La auditoría por proyecto detectó que más de 20 plugins reimplementan el mismo seam Provider y duplican las mismas formas de sanitización, precios y veredictos, así que este paquete lo extrae todo — el seam Provider enchufable, las puertas de aprobación fail-closed y de eventos de sesión adaptativos, los scripts de verificación mecánica y los módulos puros sanitize/pricing/judge — en un único paquete ESM + TypeScript.
 
-![Demostración de terminal de dsh-plugin-kit: dsh-plugin-kit — the Provider seam, plus the three verify gates](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/main/docs/assets/dsh-plugin-kit-demo.png)
+![Demostración de terminal de dsh-plugin-kit: dsh-plugin-kit — the Provider seam, plus the three verify gates](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/main/docs/assets/dsh-plugin-kit-hero.png)
 
 ![Animated terminal demo of dsh-plugin-kit](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/main/docs/assets/dsh-plugin-kit-demo.gif)
 
@@ -175,7 +177,7 @@ pnpm run verify:artifacts
 
 ## Temas
 
-Este repositorio es también el centro de mantenimiento de los 33 repos de
+Este repositorio es también el centro de mantenimiento del ecosistema:
 plugins: `scripts/sync-peer-range.mjs` repinnea la banda de peers compartida
 en todos los repos con un comando, `renovate/default.json5` es el preset de
 Renovate compartido que todos extienden, `.github/workflows/npm-publish.yml`

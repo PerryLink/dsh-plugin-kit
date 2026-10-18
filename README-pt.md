@@ -1,6 +1,8 @@
 # @perrylink/dsh-plugin-kit
 
-Kit compartilhado **sem dependências em tempo de execução** para os repositórios de plugins DSH da PerryLink. A auditoria por projeto encontrou mais de 20 dos 33 plugins reimplementando o mesmo seam Provider e duplicando as mesmas formas de sanitização, precificação e veredicto, então este pacote extrai tudo isso — o seam Provider plugável, as portas de aprovação fail-closed e de eventos de sessão adaptativos, os scripts de verificação mecânica e os módulos puros sanitize/pricing/judge — em um único pacote ESM + TypeScript.
+Kit compartilhado **sem dependências em tempo de execução** para os repositórios de plugins DSH da PerryLink. A auditoria por projeto encontrou mais de 20 plugins reimplementando o mesmo seam Provider e duplicando as mesmas formas de sanitização, precificação e veredicto, então este pacote extrai tudo isso — o seam Provider plugável, as portas de aprovação fail-closed e de eventos de sessão adaptativos, os scripts de verificação mecânica e os módulos puros sanitize/pricing/judge — em um único pacote ESM + TypeScript.
+
+> **Nome do pacote.** Este projeto é publicado no npm como **`@perrylink/dsh-plugin-kit`**. O nome simples `dsh-plugin-kit` pertence a outro projeto não relacionado — instalá-lo não instala este pacote.
 
 - **Canal da loja 1024**: primeiro `npm i -g dsh1024`, depois `dsh1024 plugin --profile web add @perrylink/dsh-plugin-kit` (conta para o ranking de instalações do [deepseek1024.com](https://deepseek1024.com)).
 
@@ -19,7 +21,7 @@ Kit compartilhado **sem dependências em tempo de execução** para os repositó
 
 Kit compartilhado **sem dependências em tempo de execução** para os
 repositórios de plugins DSH da PerryLink. A auditoria por projeto encontrou
-mais de 20 dos 33 plugins reimplementando o mesmo seam Provider e duplicando
+mais de 20 plugins reimplementando o mesmo seam Provider e duplicando
 as mesmas formas de sanitização, precificação e veredicto, então este pacote
 extrai tudo isso — o seam Provider plugável, as portas de aprovação
 fail-closed e de eventos de sessão adaptativos, os scripts de verificação
@@ -28,9 +30,9 @@ ESM + TypeScript.
 
 ## What is dsh-plugin-kit?
 
-Kit compartilhado **sem dependências em tempo de execução** para os repositórios de plugins DSH da PerryLink. A auditoria por projeto encontrou mais de 20 dos 33 plugins reimplementando o mesmo seam Provider e duplicando as mesmas formas de sanitização, precificação e veredicto, então este pacote extrai tudo isso — o seam Provider plugável, as portas de aprovação fail-closed e de eventos de sessão adaptativos, os scripts de verificação mecânica e os módulos puros sanitize/pricing/judge — em um único pacote ESM + TypeScript.
+Kit compartilhado **sem dependências em tempo de execução** para os repositórios de plugins DSH da PerryLink. A auditoria por projeto encontrou mais de 20 plugins reimplementando o mesmo seam Provider e duplicando as mesmas formas de sanitização, precificação e veredicto, então este pacote extrai tudo isso — o seam Provider plugável, as portas de aprovação fail-closed e de eventos de sessão adaptativos, os scripts de verificação mecânica e os módulos puros sanitize/pricing/judge — em um único pacote ESM + TypeScript.
 
-![Demonstração de terminal do dsh-plugin-kit: dsh-plugin-kit — the Provider seam, plus the three verify gates](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/main/docs/assets/dsh-plugin-kit-demo.png)
+![Demonstração de terminal do dsh-plugin-kit: dsh-plugin-kit — the Provider seam, plus the three verify gates](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/main/docs/assets/dsh-plugin-kit-hero.png)
 
 ![Animated terminal demo of dsh-plugin-kit](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/main/docs/assets/dsh-plugin-kit-demo.gif)
 
@@ -176,7 +178,7 @@ pnpm run verify:artifacts
 
 ## Tópicos
 
-Este repositório também é o hub de manutenção dos 33 repos de plugins:
+Este repositório também é o hub de manutenção do ecossistema:
 `scripts/sync-peer-range.mjs` reaponta a faixa de peers compartilhada em todos
 os repos com um comando, `renovate/default.json5` é o preset compartilhado do
 Renovate que todos estendem, `.github/workflows/npm-publish.yml` é um fluxo de
