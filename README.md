@@ -1,5 +1,10 @@
 # @perrylink/dsh-plugin-kit
 
+```sh
+dsh plugin --profile <name> add @perrylink/dsh-plugin-kit
+```
+
+
 Shared **zero-runtime-dependency** toolkit for the PerryLink DSH plugin repositories. The per-project audit found 20+ plugins hand-rolling the same Provider seam and duplicating the same sanitize/pricing/verdict shapes, so this package extracts all of it — the pluggable Provider seam, the fail-closed approval and adaptive session-event gates, the mechanical verify scripts, and the shared sanitize/pricing/judge pure modules — into one ESM + TypeScript package.
 
 > **Package name.** This project publishes to npm as **`@perrylink/dsh-plugin-kit`**. The bare npm name `dsh-plugin-kit` belongs to a different, unrelated project — installing it does not install this package.
@@ -26,6 +31,29 @@ shapes, so this package extracts all of it — the pluggable Provider seam, the
 fail-closed approval and adaptive session-event gates, the mechanical verify
 scripts, and the shared sanitize/pricing/judge pure modules — into one
 ESM + TypeScript package.
+
+## Install & uninstall
+
+As a library, install is `pnpm add` (see Quick start). The package also ships an
+intentionally empty `dsh.bundle.patch` layer (`cordis.patch.yml`), so it flows
+through the harness bundle channel when a profile wants the kit mounted as a
+package:
+
+```sh
+# npm channel (published releases)
+dsh plugin --profile web add @perrylink/dsh-plugin-kit
+
+# git channel (latest master)
+dsh plugin --profile web add github:PerryLink/dsh-plugin-kit
+```
+
+Remove with:
+
+```sh
+pnpm remove @perrylink/dsh-plugin-kit
+```
+
+Nothing registers global state: uninstall is exactly the reverse of install.
 
 ## What is dsh-plugin-kit?
 
@@ -95,29 +123,6 @@ const registry = new ProviderRegistry<Detector>({
 ctx.effect(() => registry.register('ner', new NerDetector()))
 const active = registry.use('ner') ?? registry.use()
 ```
-
-## Install & uninstall
-
-As a library, install is `pnpm add` (see Quick start). The package also ships an
-intentionally empty `dsh.bundle.patch` layer (`cordis.patch.yml`), so it flows
-through the harness bundle channel when a profile wants the kit mounted as a
-package:
-
-```sh
-# npm channel (published releases)
-dsh plugin --profile web add @perrylink/dsh-plugin-kit
-
-# git channel (latest master)
-dsh plugin --profile web add github:PerryLink/dsh-plugin-kit
-```
-
-Remove with:
-
-```sh
-pnpm remove @perrylink/dsh-plugin-kit
-```
-
-Nothing registers global state: uninstall is exactly the reverse of install.
 
 ## Configuration
 

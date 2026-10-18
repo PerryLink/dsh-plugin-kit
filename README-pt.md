@@ -19,6 +19,11 @@ Kit compartilhado **sem dependências em tempo de execução** para os repositó
 
 [English](README.md) | [简体中文](README-zh.md) | [Español](README-es.md) | **Português** | [हिन्दी](README-hi.md)
 
+```sh
+dsh plugin --profile <name> add @perrylink/dsh-plugin-kit
+```
+
+
 Kit compartilhado **sem dependências em tempo de execução** para os
 repositórios de plugins DSH da PerryLink. A auditoria por projeto encontrou
 mais de 20 plugins reimplementando o mesmo seam Provider e duplicando

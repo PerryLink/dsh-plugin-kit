@@ -19,6 +19,11 @@
 
 [English](README.md) | **简体中文** | [Español](README-es.md) | [Português](README-pt.md) | [हिन्दी](README-hi.md)
 
+```sh
+dsh plugin --profile <name> add @perrylink/dsh-plugin-kit
+```
+
+
 面向 PerryLink DSH 插件仓库的共享**零运行时依赖**工具包。逐项审计发现 20+ 插件
 各自手写同样的 Provider seam、并重复相同的 sanitize/pricing/裁决形状，因此本包把
 这一切——可插拔 Provider seam、fail-closed 审批门与自适应会话事件门、机械校验脚本、共享

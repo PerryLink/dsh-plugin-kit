@@ -1,5 +1,12 @@
 # @perrylink/dsh-plugin-kit
 
+[English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
+
+```sh
+dsh plugin --profile <name> add @perrylink/dsh-plugin-kit
+```
+
+
 PerryLink DSH प्लगइन रिपॉज़िटरीज़ के लिए साझा **शून्य-रनटाइम-निर्भरता** टूलकिट। प्रति-प्रोजेक्ट ऑडिट में पाया गया कि 20+ प्लगइन एक ही Provider seam हाथ से लिखते हैं और एक जैसी sanitize/pricing/निर्णय आकृतियाँ दोहराते हैं, इसलिए यह पैकेज वह सब — प्लगेबल Provider seam, fail-closed अनुमोदन और अनुकूली सत्र-घटना गेट, यांत्रिक verify स्क्रिप्ट और साझा sanitize/pricing/judge शुद्ध मॉड्यूल — एक ESM + TypeScript पैकेज में निकालता है।
 
 > **पैकेज नाम।** यह प्रोजेक्ट npm पर **`@perrylink/dsh-plugin-kit`** के रूप में प्रकाशित होता है। सादा नाम `dsh-plugin-kit` किसी असंबंधित प्रोजेक्ट का है — उसे इंस्टॉल करने से यह पैकेज इंस्टॉल नहीं होता।
@@ -25,6 +32,26 @@ PerryLink DSH प्लगइन रिपॉज़िटरीज़ के ल
 यह पैकेज वह सब — प्लगेबल Provider seam, fail-closed अनुमोदन और अनुकूली
 सत्र-घटना गेट, यांत्रिक verify स्क्रिप्ट और साझा sanitize/pricing/judge शुद्ध
 मॉड्यूल — एक ESM + TypeScript पैकेज में निकालता है।
+
+## इंस्टॉल और अनइंस्टॉल (Install & uninstall)
+
+इंस्टॉल `pnpm add` है (त्वरित शुरुआत देखें)। यह पैकेज जान-बूझकर खाली `dsh.bundle.patch` परत (`cordis.patch.yml`) भी लाता है, इसलिए जब कोई profile kit को पैकेज के रूप में माउंट करना चाहे तो यह harness के bundle चैनल से भी जाता है:
+
+```sh
+# npm चैनल (प्रकाशित रिलीज़)
+dsh plugin --profile web add @perrylink/dsh-plugin-kit
+
+# git चैनल (नवीनतम master)
+dsh plugin --profile web add github:PerryLink/dsh-plugin-kit
+```
+
+हटाने के लिए:
+
+```sh
+pnpm remove @perrylink/dsh-plugin-kit
+```
+
+कुछ भी वैश्विक स्थिति पंजीकृत नहीं करता: अनइंस्टॉल इंस्टॉल का ठीक उल्टा है।
 
 ## What is dsh-plugin-kit?
 
@@ -92,26 +119,6 @@ const registry = new ProviderRegistry<Detector>({
 ctx.effect(() => registry.register('ner', new NerDetector()))
 const active = registry.use('ner') ?? registry.use()
 ```
-
-## इंस्टॉल और अनइंस्टॉल (Install & uninstall)
-
-इंस्टॉल `pnpm add` है (त्वरित शुरुआत देखें)। यह पैकेज जान-बूझकर खाली `dsh.bundle.patch` परत (`cordis.patch.yml`) भी लाता है, इसलिए जब कोई profile kit को पैकेज के रूप में माउंट करना चाहे तो यह harness के bundle चैनल से भी जाता है:
-
-```sh
-# npm चैनल (प्रकाशित रिलीज़)
-dsh plugin --profile web add @perrylink/dsh-plugin-kit
-
-# git चैनल (नवीनतम master)
-dsh plugin --profile web add github:PerryLink/dsh-plugin-kit
-```
-
-हटाने के लिए:
-
-```sh
-pnpm remove @perrylink/dsh-plugin-kit
-```
-
-कुछ भी वैश्विक स्थिति पंजीकृत नहीं करता: अनइंस्टॉल इंस्टॉल का ठीक उल्टा है।
 
 ## कॉन्फ़िगरेशन (Configuration)
 

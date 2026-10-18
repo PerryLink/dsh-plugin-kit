@@ -19,6 +19,11 @@ Kit compartido **sin dependencias en tiempo de ejecución** para los repositorio
 
 [English](README.md) | [简体中文](README-zh.md) | **Español** | [Português](README-pt.md) | [हिन्दी](README-hi.md)
 
+```sh
+dsh plugin --profile <name> add @perrylink/dsh-plugin-kit
+```
+
+
 Kit compartido **sin dependencias en tiempo de ejecución** para los
 repositorios de plugins DSH de PerryLink. La auditoría por proyecto detectó
 que más de 20 plugins reimplementan el mismo seam Provider y
@@ -27,6 +32,26 @@ paquete lo extrae todo — el seam Provider enchufable, las puertas de aprobaci�
 fail-closed y de eventos de sesión adaptativos, los scripts de verificación
 mecánica y los módulos puros sanitize/pricing/judge — en un único paquete
 ESM + TypeScript.
+
+## Instalación y desinstalación
+
+La instalación es `pnpm add` (ver Inicio rápido). El paquete también incluye una capa `dsh.bundle.patch` deliberadamente vacía (`cordis.patch.yml`), así que también fluye por el canal bundle del harness cuando un perfil quiere montar el kit como paquete:
+
+```sh
+# canal npm (versiones publicadas)
+dsh plugin --profile web add @perrylink/dsh-plugin-kit
+
+# canal git (último master)
+dsh plugin --profile web add github:PerryLink/dsh-plugin-kit
+```
+
+Para eliminar:
+
+```sh
+pnpm remove @perrylink/dsh-plugin-kit
+```
+
+Nada registra estado global: desinstalar es exactamente lo inverso de instalar.
 
 ## What is dsh-plugin-kit?
 
@@ -96,26 +121,6 @@ const registry = new ProviderRegistry<Detector>({
 ctx.effect(() => registry.register('ner', new NerDetector()))
 const active = registry.use('ner') ?? registry.use()
 ```
-
-## Instalación y desinstalación
-
-La instalación es `pnpm add` (ver Inicio rápido). El paquete también incluye una capa `dsh.bundle.patch` deliberadamente vacía (`cordis.patch.yml`), así que también fluye por el canal bundle del harness cuando un perfil quiere montar el kit como paquete:
-
-```sh
-# canal npm (versiones publicadas)
-dsh plugin --profile web add @perrylink/dsh-plugin-kit
-
-# canal git (último master)
-dsh plugin --profile web add github:PerryLink/dsh-plugin-kit
-```
-
-Para eliminar:
-
-```sh
-pnpm remove @perrylink/dsh-plugin-kit
-```
-
-Nada registra estado global: desinstalar es exactamente lo inverso de instalar.
 
 ## Configuración
 
