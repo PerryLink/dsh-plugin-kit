@@ -37,9 +37,10 @@ ESM + TypeScript.
 
 Kit compartilhado **sem dependências em tempo de execução** para os repositórios de plugins DSH da PerryLink. A auditoria por projeto encontrou mais de 20 plugins reimplementando o mesmo seam Provider e duplicando as mesmas formas de sanitização, precificação e veredicto, então este pacote extrai tudo isso — o seam Provider plugável, as portas de aprovação fail-closed e de eventos de sessão adaptativos, os scripts de verificação mecânica e os módulos puros sanitize/pricing/judge — em um único pacote ESM + TypeScript.
 
-![Demonstração de terminal do dsh-plugin-kit: dsh-plugin-kit — the Provider seam, plus the three verify gates](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/main/docs/assets/dsh-plugin-kit-hero.png)
+![Diagrama de fluxo de dsh-plugin-kit: chamada → plugin → resultado.](docs/assets/dsh-plugin-kit-flow.svg)
 
-![Animated terminal demo of dsh-plugin-kit](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/main/docs/assets/dsh-plugin-kit-demo.gif)
+*Visão geral do fluxo: chamada → plugin → resultado. Os exemplos abaixo usam a superfície real de comandos.*
+
 
 *A mesma execução, animada.*
 
@@ -121,6 +122,19 @@ pnpm remove @perrylink/dsh-plugin-kit
 ```
 
 Nada registra estado global: desinstalar é exatamente o inverso de instalar.
+
+### Exemplos
+
+São os pontos de entrada reais; instale e chame um.
+
+#### Exemplo detalhado
+
+- `sanitize`
+
+#### Exemplos breves
+
+- `applyFailClosed`
+- `parseVerdict`
 
 ## Configuração
 

@@ -57,9 +57,10 @@ Nada registra estado global: desinstalar es exactamente lo inverso de instalar.
 
 Kit compartido **sin dependencias en tiempo de ejecución** para los repositorios de plugins DSH de PerryLink. La auditoría por proyecto detectó que más de 20 plugins reimplementan el mismo seam Provider y duplican las mismas formas de sanitización, precios y veredictos, así que este paquete lo extrae todo — el seam Provider enchufable, las puertas de aprobación fail-closed y de eventos de sesión adaptativos, los scripts de verificación mecánica y los módulos puros sanitize/pricing/judge — en un único paquete ESM + TypeScript.
 
-![Demostración de terminal de dsh-plugin-kit: dsh-plugin-kit — the Provider seam, plus the three verify gates](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/main/docs/assets/dsh-plugin-kit-hero.png)
+![Diagrama de flujo de dsh-plugin-kit: llamada → plugin → resultado.](docs/assets/dsh-plugin-kit-flow.svg)
 
-![Animated terminal demo of dsh-plugin-kit](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/main/docs/assets/dsh-plugin-kit-demo.gif)
+*Resumen del flujo: llamada → plugin → resultado. Los ejemplos siguientes usan la superficie de comandos real.*
+
 
 *La misma ejecución, animada.*
 
@@ -121,6 +122,19 @@ const registry = new ProviderRegistry<Detector>({
 ctx.effect(() => registry.register('ner', new NerDetector()))
 const active = registry.use('ner') ?? registry.use()
 ```
+
+### Ejemplos
+
+Son los puntos de entrada reales; instala y llama a uno.
+
+#### Ejemplo detallado
+
+- `sanitize`
+
+#### Ejemplos breves
+
+- `applyFailClosed`
+- `parseVerdict`
 
 ## Configuración
 

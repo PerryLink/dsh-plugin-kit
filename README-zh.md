@@ -33,9 +33,10 @@ dsh plugin --profile <name> add @perrylink/dsh-plugin-kit
 
 面向 PerryLink DSH 插件仓库的共享**零运行时依赖**工具包。逐项审计发现 20+ 插件各自手写同样的 Provider seam、并重复相同的 sanitize/pricing/裁决形状，因此本包把 这一切——可插拔 Provider seam、fail-closed 审批门与自适应会话事件门、机械校验脚本、共享 的 sanitize/pricing/judge 纯函数模块——抽取进一个 ESM + TypeScript 包。
 
-![dsh-plugin-kit 终端演示：dsh-plugin-kit — the Provider seam, plus the three verify gates](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/main/docs/assets/dsh-plugin-kit-hero.png)
+![dsh-plugin-kit 工作流图：调用 → 插件 → 结果。](docs/assets/dsh-plugin-kit-flow.svg)
 
-![Animated terminal demo of dsh-plugin-kit](https://raw.githubusercontent.com/PerryLink/dsh-plugin-kit/main/docs/assets/dsh-plugin-kit-demo.gif)
+*工作流概览：调用 → 插件 → 结果。下面的示例使用实际命令面。*
+
 
 *同一次运行，动图版。*
 
@@ -108,6 +109,19 @@ pnpm remove @perrylink/dsh-plugin-kit
 ```
 
 不注册任何全局状态：卸载就是安装的精确逆操作。
+
+### 示例
+
+以下为插件真实入口；安装后调用一个即可。
+
+#### 详细示例
+
+- `sanitize`
+
+#### 简短示例
+
+- `applyFailClosed`
+- `parseVerdict`
 
 ## 配置
 
