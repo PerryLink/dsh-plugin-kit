@@ -130,7 +130,20 @@ These are the plugin's real entry points; install once, then call one.
 
 #### Detailed example
 
-- `sanitize`
+**Command**
+
+~~~sh
+import { createStripper } from '@perrylink/dsh-plugin-kit/shared'
+createStripper().strip('call 13800138000 or email a@b.com')
+~~~
+
+**Output**
+
+~~~text
+call <PHONE_1> or email <EMAIL_1>
+~~~
+
+*Observed from `README.md:153 (shared sanitize); src/shared/sanitize.ts:268; test/sanitize.test.ts:8-19`*
 
 #### Brief examples
 

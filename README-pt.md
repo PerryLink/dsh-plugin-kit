@@ -129,7 +129,20 @@ São os pontos de entrada reais; instale e chame um.
 
 #### Exemplo detalhado
 
-- `sanitize`
+**Comando**
+
+~~~sh
+import { createStripper } from '@perrylink/dsh-plugin-kit/shared'
+createStripper().strip('call 13800138000 or email a@b.com')
+~~~
+
+**Saída**
+
+~~~text
+call <PHONE_1> or email <EMAIL_1>
+~~~
+
+*Observado em `README.md:153 (shared sanitize); src/shared/sanitize.ts:268; test/sanitize.test.ts:8-19`*
 
 #### Exemplos breves
 

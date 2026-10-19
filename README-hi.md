@@ -313,7 +313,20 @@ Apache-2.0 — [LICENSE](LICENSE) देखें।
 
 #### विस्तृत उदाहरण
 
-- `sanitize`
+**कमांड**
+
+~~~sh
+import { createStripper } from '@perrylink/dsh-plugin-kit/shared'
+createStripper().strip('call 13800138000 or email a@b.com')
+~~~
+
+**आउटपुट**
+
+~~~text
+call <PHONE_1> or email <EMAIL_1>
+~~~
+
+*स्रोत `README.md:153 (shared sanitize); src/shared/sanitize.ts:268; test/sanitize.test.ts:8-19`*
 
 #### संक्षिप्त उदाहरण
 
