@@ -144,6 +144,22 @@ call <PHONE_1> or email <EMAIL_1>
 
 *Observado en `README.md:153 (shared sanitize); src/shared/sanitize.ts:268; test/sanitize.test.ts:8-19`*
 
+#### Rama de fallo
+
+**Entrada**
+
+~~~text
+const r = new ProviderRegistry(); r.register('openai', impl); r.register('openai', impl)  // second call
+~~~
+
+**Salida**
+
+~~~text
+Error: Provider "openai" is already registered
+~~~
+
+*Observado en `plugins/dsh-plugin-kit/lib/seam/provider.js:55-58; plugins/dsh-plugin-kit/test/seam.test.ts:27-30; plugins/dsh-plugin-kit/README.md:164`*
+
 #### Ejemplos breves
 
 - `applyFailClosed`

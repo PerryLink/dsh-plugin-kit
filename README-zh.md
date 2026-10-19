@@ -131,6 +131,22 @@ call <PHONE_1> or email <EMAIL_1>
 
 *来源 `README.md:153 (shared sanitize); src/shared/sanitize.ts:268; test/sanitize.test.ts:8-19`*
 
+#### 失败分支
+
+**输入**
+
+~~~text
+const r = new ProviderRegistry(); r.register('openai', impl); r.register('openai', impl)  // second call
+~~~
+
+**输出**
+
+~~~text
+Error: Provider "openai" is already registered
+~~~
+
+*来源 `plugins/dsh-plugin-kit/lib/seam/provider.js:55-58; plugins/dsh-plugin-kit/test/seam.test.ts:27-30; plugins/dsh-plugin-kit/README.md:164`*
+
 #### 简短示例
 
 - `applyFailClosed`
