@@ -189,10 +189,7 @@ the target directory in
 one command, `renovate/default.json5` is the shared Renovate preset every repo
 extends, `.github/workflows/npm-publish.yml` is a reusable tag-triggered
 publish workflow (needs only an `NPM_TOKEN` secret), and `data/repos.json` is
-the ecosystem registry consumed by the portal — **95 entries as of 2026-10-13**
-(87 active, 5 frozen, 3 retired), of which 42 are in this workspace and 53 are
-the compliance checkers in `D:\Projects\dsh-plugins`. Counts live in that file;
-read it rather than this sentence. See
+the ecosystem registry consumed by the portal. Read that file for the roster; the per-plugin READMEs carry the collapsed list. See
 [docs/ecosystem-tooling.md](docs/ecosystem-tooling.md).
 
 Keywords: dsh, dsh-plugin, deepseek-harness, deepseek, cordis, perrylink,
