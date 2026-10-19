@@ -178,7 +178,7 @@ seam、approval、sanitize、pricing、judge。
 
 Apache-2.0——见 [LICENSE](LICENSE)。
 
-## PerryLink DSH 插件家族
+## PerryLink DSH Plugin Family
 
 本项目是 [PerryLink](https://github.com/PerryLink) 维护的 DeepSeek Harness 插件家族成员。完整名单默认折叠，避免每个 README 的首屏被长表淹没；点击展开可查看每一行及其状态。
 
