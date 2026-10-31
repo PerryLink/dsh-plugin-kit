@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-10-19",
-  "note": "Registry of the @perrylink dsh plugin ecosystem (99 plugin repos + this kit). Star counts re-read on 2026-10-19; `status` re-derived on 2026-10-19. `status` is the maintenance state: active, frozen (no new features, only real breakages fixed), retired (npm-deprecated). The roster rule is the same one plugins.txt uses: `dsh.bundle.patch` declared, published, and not retired.",
+  "updatedAt": "2026-10-31",
+  "note": "Registry of the @perrylink dsh plugin ecosystem (99 plugin repos + this kit). Star counts re-read on 2026-10-19; `status` re-derived on 2026-10-31. `status` is the maintenance state: active, frozen (no new features, only real breakages fixed), retired (npm-deprecated). The roster rule is the same one plugins.txt uses: `dsh.bundle.patch` declared, published, and not retired.",
   "repos": [
     {
       "name": "dsh-plugin-kit",
@@ -24,7 +24,7 @@
       "group": "生态",
       "role": "plugin",
       "star": 0,
-      "status": "active"
+      "status": "frozen"
     },
     {
       "name": "dsh-memento",
@@ -312,7 +312,7 @@
       "group": "集成",
       "role": "plugin",
       "star": 1,
-      "status": "active"
+      "status": "frozen"
     },
     {
       "name": "dsh-cert-mcp",
@@ -320,7 +320,7 @@
       "group": "生态",
       "role": "plugin",
       "star": 0,
-      "status": "active"
+      "status": "frozen"
     },
     {
       "name": "dsh-laya",
