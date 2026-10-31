@@ -1,0 +1,10 @@
+{
+  "schema": "dsh-level-labels/1",
+  "nonOfficial": true,
+  "note": "Fill this after verifying. Leave not-run/not-measured until there is evidence; a skip is not a pass.",
+  "levels": {
+    "entry": { "status": "not-run", "evidence": null },
+    "flow": { "status": "not-run", "evidence": null },
+    "boost": { "status": "not-measured", "evidence": null }
+  }
+}
