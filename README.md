@@ -1,5 +1,9 @@
 # @perrylink/dsh-plugin-kit
 
+> **Moved:** this project is now **[dsh-scaffold](https://github.com/PerryLink/dsh-scaffold)**. This repository stays as a pointer/backup; new work happens in the new home. Old npm package `@perrylink/dsh-plugin-kit` is deprecated.
+
+
+
 > **Non-official companion tool.** Part of the DSH standards family; not a certification, accreditation, security audit, or official endorsement. Standard: https://github.com/PerryLink/dsh-standards. The `dsh.standards` block is a `not-run` placeholder, not a pass.
 
 
