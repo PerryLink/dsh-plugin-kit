@@ -23,9 +23,10 @@ Replace every `<PLACEHOLDER>` token before publishing.
 
 ## Standards (fill before publishing)
 
-This template starts at `ENTRY=not-run`, `FLOW=not-run`, `BOOST=not-measured` in
-`standards.json`. After you have evidence, update that file — never claim
-`runtime`/`measured` without a recorded gate, journey or benchmark. The three
-levels are adoption depths, not grades or certification; the public teaching
-copy is
+The optional `dsh.standards` block in `package.json` starts as a placeholder, not a claim.
+Run `level-audit` (`node 40-checker/scripts/level-audit.mjs <plugin-dir> --format json`) and replace it with the recorded output.
+With no evidence, keep `not-run` / `not-measured`; never write `PASS` without a recorded gate, journey or benchmark.
+
+The same statuses live in `standards.json`. The three levels are adoption
+depths, not grades or certification; the public teaching copy is
 [dsh-plugin-guide/guide/standards.md](https://github.com/PerryLink/dsh-plugin-guide/blob/main/guide/standards.md).
