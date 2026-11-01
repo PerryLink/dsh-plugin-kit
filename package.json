@@ -49,7 +49,9 @@
     "SECURITY.md",
     "THIRD_PARTY_NOTICES.md",
     "LICENSE",
-    "STANDARDS.md"
+    "STANDARDS.md",
+    "PRIVACY.md",
+    "icon.svg"
   ],
   "dsh": {
     "bundle": {
@@ -140,5 +142,6 @@
   "funding": {
     "type": "individual",
     "url": "https://github.com/sponsors/PerryLink"
-  }
+  },
+  "icon": "icon.svg"
 }
